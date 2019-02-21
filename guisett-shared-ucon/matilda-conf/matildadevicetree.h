@@ -52,6 +52,9 @@ public:
 
     static QStringList generalSettNames();
 
+    static QStringList generalMetersSettNames();
+
+
     static QStringList electricNames();
 
     static QStringList waterNames();
@@ -99,6 +102,11 @@ public:
     static QStringList lDevPollProtocolV5LocalNames();
     static QStringList lDevPollProtocolV5Path2icon();
 
+    static QStringList lDevPollProtocolV6RealNames();
+    static QStringList lDevPollProtocolV6LocalNames();
+    static QStringList lDevPollProtocolV6Path2icon();
+
+
     static QStringList realPageName();//en_GB
 
     static QStringList localPageName();//local lang
@@ -130,6 +138,12 @@ public:
 
     static QList<int> getPageCanWriteDevPollProtocolV5();
     static QList<int> getPageCanReadDevPollProtocolV5();
+
+
+
+    static QList<int> getPageCanWriteDevPollProtocolV6();
+    static QList<int> getPageCanReadDevPollProtocolV6();
+
 };
 
 #endif // MATILDADEVICETREE_H
