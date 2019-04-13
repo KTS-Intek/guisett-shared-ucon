@@ -33,7 +33,7 @@ QStringList MatildaDeviceTree::simplePagesList()
     l.append( QString("Schedule") );
     l.append( QString("Meters") );
     l.append( QString("Database") );
-    l.append( QString("Meter logs") );
+//    l.append( QString("Meter logs") );
     return l;
 }
 
@@ -220,7 +220,7 @@ MatildaDeviceTree::MatildaDevTreeView MatildaDeviceTree::pageName4devTree()
     addChapter(QString("Prepaid"), prepaidNames(), lKeys, h, hashRealName2ico, ":/katynko/svg4/sc_formattedfield.svg");
 
 
-    addChapter(QString("General for meters"), generalMetersSettNames(), lKeys, h, hashRealName2ico, ":/katynko/svg4/electric-water.svg");
+//    addChapter(QString("General for meters"), generalMetersSettNames(), lKeys, h, hashRealName2ico, ":/katynko/svg4/electric-water.svg");
     addChapter(QString("Electricity meter"), electricNames(), lKeys, h, hashRealName2ico, ":/katynko/svg4/sc_symbolshapes.lightning.svg");
     addChapter(QString("Water meters"), waterNames(), lKeys, h, hashRealName2ico, ":/katynko/svg4/lc_fillcolor.svg");
 
@@ -277,7 +277,15 @@ QStringList MatildaDeviceTree::infoNames()
     //protocol v4
     l.append(QString("OpenVPN state"));
 
+/// generalMetersSettNames
+    l.append( QString("Statistic of exchange")   );
+    l.append( QString("Meter plugin") );
+    l.append( QString("Poll events") );
+    l.append( QString("Poll error events") );
+    l.append( QString("Poll warning events") );
 
+    //protocol v5
+    l.append( QString("Poll tasks"));
 
     return l;
 
@@ -301,7 +309,7 @@ QStringList MatildaDeviceTree::pollDataNames()
 {
     QStringList l;
     l.append( QString("Database") );
-    l.append( QString("Meter logs") );
+//    l.append( QString("Meter logs") );
     l.append( QString("Hash summ" ) );
     return l;
 }
@@ -327,6 +335,9 @@ QStringList MatildaDeviceTree::networkSettNames()
     l.append(QString("Ethernet"));
     l.append(QString("OpenVPN profiles"));
 
+    //protocol v6
+    l.append(QString("UcProxySett"));
+
     return l;
 }
 
@@ -339,38 +350,20 @@ QStringList MatildaDeviceTree::generalSettNames()
     l.append( QString("Authorization") );
     l.append(QString("Staff accounts"));//protocol v5
 
-    return l;
 
-
-}
-
-QStringList MatildaDeviceTree::generalMetersSettNames()
-{
-    QStringList l;
-    l.append( QString("Statistic of exchange")   );
-    l.append( QString("Meter plugin") );
-    l.append( QString("Poll events") );
-    l.append( QString("Poll error events") );
-    l.append( QString("Poll warning events") );
-
-    //protocol v5
-    l.append( QString("Poll tasks"));
-
-    //older
+    //older   generalMetersSettNames
     l.append( QString("Poll") );
     l.append( QString("Forwarding table"));
     l.append( QString("ZbyratorTaskTable") );
-
-
-
-
 
     ///protocol v6
     l.append(QString("DatabaseSumm4ips"));
 
     return l;
 
+
 }
+
 
 //---------------------------------------------------------------------
 
@@ -426,6 +419,7 @@ QStringList MatildaDeviceTree::smartLightNames()
     l.append(QString("FireflyTaskTable"));
     l.append(QString("FireflyRescueSchedule"));//Water meters
     l.append(QString("FireflyNDT"));
+    l.append(QString("FireflyScheduleState"));
 
 
 
@@ -510,7 +504,7 @@ QStringList MatildaDeviceTree::realPageNameDevStor()
     l.append( QString("Backup") );
 
     l.append( QString("Database") );
-    l.append( QString("Meter logs") );
+//    l.append( QString("Meter logs") );
     l.append( QString("Hash summ" ) );
 
     //protocol v2
@@ -549,7 +543,7 @@ QStringList MatildaDeviceTree::realPageNameDevPoll4staff()
     l.append(QString("WaterSchedule"));//Water schedule
 
     l.append( QString("Database") );
-    l.append( QString("Meter logs") );
+//    l.append( QString("Meter logs") );
 
 
     return l;
@@ -659,7 +653,7 @@ QStringList MatildaDeviceTree::realPageNameDevEmul2()
 
     l.append( QString("Meters") );
     l.append( QString("Database") );
-    l.append( QString("Meter logs") );
+//    l.append( QString("Meter logs") );
     l.append( QString("Hash summ" ) );
     return l;
 }
@@ -851,12 +845,12 @@ QStringList MatildaDeviceTree::lDevPollProtocolV5RealNames()
 QStringList MatildaDeviceTree::lDevPollProtocolV5LocalNames()
 {
     QStringList l;
-    l.append(tr("Meter's tasks"));//Poll tasks
+    l.append(tr("View tasks of the meters"));//Poll tasks
     l.append(tr("Meters"));//Water
-    l.append(tr("Last active profile"));
+    l.append(tr("Last active profiles"));
     l.append(tr("Staff accounts"));
     l.append(tr("Schedule"));//Water
-    l.append(tr("Meter's task table"));
+    l.append(tr("Meter task table settings"));//"ZbyratorTaskTable"
 
     return l;
 }
@@ -885,6 +879,10 @@ QStringList MatildaDeviceTree::lDevPollProtocolV6RealNames()
     l.append(QString("FireflyTaskTable"));
     l.append(QString("FireflyRescueSchedule"));
     l.append(QString("FireflyNDT"));
+    l.append(QString("FireflyScheduleState"));
+
+
+    l.append(QString("UcProxySett"));
 
     return l;
 }
@@ -896,9 +894,12 @@ QStringList MatildaDeviceTree::lDevPollProtocolV6LocalNames()
     QStringList l;
     l.append(tr("Database IP Rules"));
 
-    l.append(tr("Lamp's task table"));
+    l.append(tr("Lamps task table settings"));
     l.append(tr("Rescue schedules"));//Water meters
-    l.append(tr("Lamps's searcher"));
+    l.append(tr("Search lamps"));
+    l.append(tr("Schedule state"));
+
+    l.append(tr("Proxy settings"));
     return l;
 }
 
@@ -913,6 +914,8 @@ QStringList MatildaDeviceTree::lDevPollProtocolV6Path2icon()
     l.append( ":/katynko/svg2/exwarning.svg");
     l.append( ":/katynko/svg/irc-voice.svg");
 
+    l.append( ":/katynko/svg4/kt-queue-manager-red.svg");
+    l.append( ":/katynko/svg2/view-web-browser-dom-tree.svg");
 
     return l;
 }
@@ -962,8 +965,8 @@ QStringList MatildaDeviceTree::realPageName()
     l.append( QString("Schedule") );
     l.append( QString("Meters") );
     l.append( QString("Database") );
-    l.append( QString("Meter logs") );
-    l.append( QString("Hash summ" ) );
+    l.append( QString("Meter logs") );//do not delete here!
+    l.append( QString("Hash summ" ) );//do not delete here!
 //size 34
 
     //protocol v2
@@ -1006,21 +1009,21 @@ QStringList MatildaDeviceTree::localPageName()
     l.append( tr("State") );
     l.append( tr("Quick Direct Access") );
 
-    l.append( tr("Statistic of exchange") );
+    l.append( tr("Exchange of the meters") );//Statistic of exchange
     l.append( tr("System") );
     l.append( tr("Network interfaces") );
     l.append( tr("Running processes") );
-    l.append( tr("Plugins for meters") );
-    l.append( tr("Application events") );
-    l.append( tr("Poll events") );
+    l.append( tr("Supported meters") );
+    l.append( tr("Main events") );
+    l.append( tr("Poll events of the meters") );
     l.append( tr("GSM/PPP") );
     l.append( tr("TCP settings") );
     l.append( tr("ZigBee") );
     l.append( tr("Packet manager") );
-    l.append( tr("Stream from the serial port")); //tr("Serial log stream") );
-    l.append( tr("UART log") );
-    l.append( tr("Poll errors") );
-    l.append( tr("Poll warnings") );
+    l.append( tr("Stream of the coordinator")); //tr("Serial log stream") );
+    l.append( tr("Log of the coordinator") );
+    l.append( tr("Poll errors of the meters") );
+    l.append( tr("Poll warnings of the meters") );
 
     l.append( tr("Simple BASH"));
 
@@ -1034,9 +1037,9 @@ QStringList MatildaDeviceTree::localPageName()
     l.append( tr("Accessibility") );
 
     l.append( tr("Backup") );
-    l.append( tr("Poll") );
-    l.append( tr("Forwarding table"));
-    l.append( tr("Schedule") );
+    l.append( tr("Poll of the meters") );//"Poll"
+    l.append( tr("Forwarding table of the meters"));//"Forwarding table"
+    l.append( tr("Schedule") );//"Schedule"
     l.append( tr("Meters") );
     l.append( tr("Database") );
     l.append( tr("Logs of meters") );
@@ -1375,7 +1378,7 @@ QList<int> MatildaDeviceTree::getPageCanWriteDevPollProtocolV6()
 //    l.append(tr("Lamp's tasks"));
 //    l.append(tr("Rescue schedules"));//Water meters
 //    l.append(tr("Lamps's searcher"));
-    return QList<int>() << COMMAND_WRITE_CALC_SUMM_4THISIPS << COMMAND_WRITE_FIREFLY_TABLE_SETT << COMMAND_WRITE_GROUP_RESCUE_SCHEDULE << 0;
+    return QList<int>() << COMMAND_WRITE_CALC_SUMM_4THISIPS << COMMAND_WRITE_FIREFLY_TABLE_SETT << COMMAND_WRITE_GROUP_RESCUE_SCHEDULE << 0 << 0 << COMMAND_WRITE_PROXYSETTINGS;
 
 
 }
@@ -1384,7 +1387,7 @@ QList<int> MatildaDeviceTree::getPageCanWriteDevPollProtocolV6()
 
 QList<int> MatildaDeviceTree::getPageCanReadDevPollProtocolV6()
 {
-    return QList<int>() << COMMAND_READ_CALC_SUMM_4THISIPS << COMMAND_READ_FIREFLY_TABLE_SETT << COMMAND_READ_GROUP_RESCUE_SCHEDULE << COMMAND_READ_FIREFLY_STATUS_NDT;
+    return QList<int>() << COMMAND_READ_CALC_SUMM_4THISIPS << COMMAND_READ_FIREFLY_TABLE_SETT << COMMAND_READ_GROUP_RESCUE_SCHEDULE << COMMAND_READ_FIREFLY_STATUS_NDT << COMMAND_READ_FIREFLY_SCHEDULESTATE << COMMAND_READ_PROXYSETTINGS;
 
 }
 

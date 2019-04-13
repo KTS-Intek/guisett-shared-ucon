@@ -52,7 +52,6 @@ public:
 
     static QStringList generalSettNames();
 
-    static QStringList generalMetersSettNames();
 
 
     static QStringList electricNames();
