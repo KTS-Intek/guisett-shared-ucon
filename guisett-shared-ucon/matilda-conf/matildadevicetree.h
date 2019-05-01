@@ -75,11 +75,11 @@ public:
 
     static QStringList realPageNameDevGate();
 
-    static QStringList realPageNameDevEmul0();
+    static QStringList realPageNameDevEmul0(const int &protocolVersion);
 
-    static QStringList realPageNameDevEmul1();
+    static QStringList realPageNameDevEmul1(const int &protocolVersion);
 
-    static QStringList realPageNameDevEmul2();
+    static QStringList realPageNameDevEmul2(const int &protocolVersion);
     static QStringList realPageNameDevEmul3();
 
     static QStringList realPageNameDevSvaha();

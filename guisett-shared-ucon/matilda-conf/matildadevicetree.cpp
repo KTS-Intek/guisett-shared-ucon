@@ -171,9 +171,9 @@ QStringList MatildaDeviceTree::realPageNameByDev(const int &devType, const int &
 
     case DEV_POLL_4_STAFF   : l = realPageNameDevPoll4staff(); break;
 
-    case DEV_POLL_EMULATOR_L0: l = realPageNameDevEmul0(); break;
-    case DEV_POLL_EMULATOR_L1: l = realPageNameDevEmul1(); break;
-    case DEV_POLL_EMULATOR_L2: l = realPageNameDevEmul2(); break;
+    case DEV_POLL_EMULATOR_L0: l = realPageNameDevEmul0(protocolVersion); break;
+    case DEV_POLL_EMULATOR_L1: l = realPageNameDevEmul1(protocolVersion); break;
+    case DEV_POLL_EMULATOR_L2: l = realPageNameDevEmul2(protocolVersion); break;
 
     case DEV_POLL_EMULATOR_L3: l = realPageNameDevEmul3(); break;
 
@@ -601,21 +601,21 @@ QStringList MatildaDeviceTree::realPageNameDevGate()
 
 //---------------------------------------------------------------------
 
-QStringList MatildaDeviceTree::realPageNameDevEmul0()
+QStringList MatildaDeviceTree::realPageNameDevEmul0(const int &protocolVersion)
 {
-    return realPageNameDevEmul2();
+    return realPageNameDevEmul2(protocolVersion);
 }
 
 //---------------------------------------------------------------------
 
-QStringList MatildaDeviceTree::realPageNameDevEmul1()
+QStringList MatildaDeviceTree::realPageNameDevEmul1(const int &protocolVersion)
 {
-    return realPageNameDevEmul2();
+    return realPageNameDevEmul2(protocolVersion);
 }
 
 //---------------------------------------------------------------------
 
-QStringList MatildaDeviceTree::realPageNameDevEmul2()
+QStringList MatildaDeviceTree::realPageNameDevEmul2(const int &protocolVersion)
 {
     QStringList l ;
     l.append( QString("About object")            );
@@ -655,6 +655,17 @@ QStringList MatildaDeviceTree::realPageNameDevEmul2()
     l.append( QString("Database") );
 //    l.append( QString("Meter logs") );
     l.append( QString("Hash summ" ) );
+
+    if(protocolVersion >= MATILDA_PROTOCOL_VERSION_V5){
+        l.append(lDevPollProtocolV5RealNames());
+        l.removeOne("WaterSchedule");//not supported
+
+
+        if(protocolVersion >= MATILDA_PROTOCOL_VERSION_V6)
+            l.append("DatabaseSumm4ips");
+    }
+
+
     return l;
 }
 //---------------------------------------------------------------------
