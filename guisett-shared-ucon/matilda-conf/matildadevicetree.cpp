@@ -632,7 +632,7 @@ QStringList MatildaDeviceTree::realPageNameDevEmul2(const int &protocolVersion)
     l.append( QString("Poll events") );
 
     l.append( QString("TCP settings") );
-    l.append( QString("ZigBee") );
+//    l.append( QString("ZigBee") );
 
     l.append( QString("Serial log stream") );
     l.append( QString("Serial log") );
@@ -640,7 +640,7 @@ QStringList MatildaDeviceTree::realPageNameDevEmul2(const int &protocolVersion)
     l.append( QString("Poll warning events") );
 
 
-    l.append( QString("Direct access service") );
+//    l.append( QString("Direct access service") );
     l.append( QString("Direct access client") );
     l.append( QString("M2M client") );
 
