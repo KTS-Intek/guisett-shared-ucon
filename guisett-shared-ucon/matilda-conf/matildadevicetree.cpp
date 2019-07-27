@@ -907,7 +907,7 @@ QStringList MatildaDeviceTree::lDevPollProtocolV6LocalNames()
 
     l.append(tr("Lamps task table settings"));
     l.append(tr("Rescue schedules"));//Water meters
-    l.append(tr("Search lamps"));
+    l.append(tr("Search for LCU"));
     l.append(tr("Schedule state"));
 
     l.append(tr("Proxy settings"));
