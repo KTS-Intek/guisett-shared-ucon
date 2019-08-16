@@ -47,26 +47,30 @@ QStringList MatildaDeviceTree::listPath2icon()
     l.append( ":/katynko/svg2/view-readermode-active.svg" );
     l.append( ":/katynko/svg2/zoom-in-2.svg");
 
-    l.append( ":/katynko/svg/view-statistics.svg");
     l.append( ":/katynko/svg2/lc_extendedhelp.svg");
 
     l.append( ":/katynko/svg2/network-disconnect.svg" );
 
     l.append( ":/katynko/svg2/view-readermode.svg" );
 
-    l.append( ":/katynko/svg/address-book-new.svg" );
 
     l.append( ":/katynko/svg2/view-readermode-gr.svg" );
 
-    l.append( ":/katynko/svg2/view-readermode-gr2.svg" );
     l.append( ":/katynko/svg2/call-start.svg");
     l.append( ":/katynko/svg2/network-wired.svg");
     l.append( ":/katynko/svg2/network-wireless.svg" );
+
+
+
     l.append( ":/katynko/svg2/journal-new.svg" );
 
     l.append( ":/katynko/svg2/refinp2.svg");
-
     l.append( ":/katynko/svg/view-list-text.svg");
+
+    l.append( ":/katynko/svg/address-book-new.svg" );
+    l.append( ":/katynko/svg/view-statistics.svg");//Statistic of exchange
+    l.append( ":/katynko/svg2/view-readermode-gr2.svg" );
+
 
     l.append( ":/katynko/svg2/view-readermode-red2.svg" );
     l.append( ":/katynko/svg2/view-readermode-yel2.svg" );
@@ -88,8 +92,8 @@ QStringList MatildaDeviceTree::listPath2icon()
 
     l.append( ":/katynko/svg2/kt-queue-manager.svg");
     l.append( ":/katynko/svg/table.svg");
-    l.append( ":/katynko/svg2/dashboard-show.svg");
     l.append( ":/katynko/svg/format-justify-fill.svg" );
+    l.append( ":/katynko/svg2/dashboard-show.svg");
     l.append( ":/katynko/svg2/db.svg" );
     l.append( ":/katynko/svg2/lc_dbqueryedit.svg");
 
@@ -274,8 +278,7 @@ QStringList MatildaDeviceTree::infoNames()
     l.append( QString("Serial log stream") );
     l.append( QString("Serial log") );
 
-    //protocol v4
-    l.append(QString("OpenVPN state"));
+
 
 /// generalMetersSettNames
     l.append( QString("Statistic of exchange")   );
@@ -283,6 +286,9 @@ QStringList MatildaDeviceTree::infoNames()
     l.append( QString("Poll events") );
     l.append( QString("Poll error events") );
     l.append( QString("Poll warning events") );
+
+    //protocol v4
+    l.append(QString("OpenVPN state"));
 
     //protocol v5
     l.append( QString("Poll tasks"));
@@ -405,7 +411,6 @@ QStringList MatildaDeviceTree::smartLightNames()
 
     l.append( QString("Lamps") );
     l.append( QString("Schedule for groups") );
-    l.append( QString("Temporary schedule") );
 
     l.append( QString("Tasks") );
     l.append( QString("Relay") );
@@ -414,6 +419,8 @@ QStringList MatildaDeviceTree::smartLightNames()
     l.append( QString("General events") );
     l.append( QString("Error events") );
     l.append( QString("Warning events") );
+///v4
+    l.append( QString("Temporary schedule") );
 
 ///protocol v6
     l.append(QString("FireflyTaskTable"));
@@ -943,19 +950,20 @@ QStringList MatildaDeviceTree::realPageName()
     l.append( QString("State")                   );
     l.append( QString("Quick Direct Access") );
 
-    l.append( QString("Statistic of exchange")   );
     l.append( QString("System") );
     l.append( QString("Network interfaces") );
     l.append( QString("Running process") );
-    l.append( QString("Meter plugin") );
     l.append( QString("Application events") );
-    l.append( QString("Poll events") );
     l.append( QString("GSM/PPP") );
     l.append( QString("TCP settings") );
     l.append( QString("ZigBee") );
     l.append( QString("Packet manager") );
     l.append( QString("Serial log stream") );
     l.append( QString("Serial log") );
+
+    l.append( QString("Meter plugin") );
+    l.append( QString("Statistic of exchange")   );
+    l.append( QString("Poll events") );
     l.append( QString("Poll error events") );
     l.append( QString("Poll warning events") );
 
@@ -973,8 +981,8 @@ QStringList MatildaDeviceTree::realPageName()
     l.append( QString("Backup") );
     l.append( QString("Poll") );
     l.append( QString("Forwarding table"));
-    l.append( QString("Schedule") );
     l.append( QString("Meters") );
+    l.append( QString("Schedule") );
     l.append( QString("Database") );
     l.append( QString("Meter logs") );//do not delete here!
     l.append( QString("Hash summ" ) );//do not delete here!
@@ -1020,19 +1028,20 @@ QStringList MatildaDeviceTree::localPageName()
     l.append( tr("State") );
     l.append( tr("Quick Direct Access") );
 
-    l.append( tr("Exchange of the meters") );//Statistic of exchange
     l.append( tr("System") );
     l.append( tr("Network interfaces") );
     l.append( tr("Running processes") );
-    l.append( tr("Supported meters") );
     l.append( tr("Main events") );
-    l.append( tr("Poll events of the meters") );
     l.append( tr("GSM/PPP") );
     l.append( tr("TCP settings") );
     l.append( tr("ZigBee") );
     l.append( tr("Packet manager") );
     l.append( tr("Stream of the coordinator")); //tr("Serial log stream") );
     l.append( tr("Log of the coordinator") );
+
+    l.append( tr("Supported meters") );
+    l.append( tr("Exchange of the meters") );//Statistic of exchange
+    l.append( tr("Poll events of the meters") );
     l.append( tr("Poll errors of the meters") );
     l.append( tr("Poll warnings of the meters") );
 
@@ -1050,8 +1059,8 @@ QStringList MatildaDeviceTree::localPageName()
     l.append( tr("Backup") );
     l.append( tr("Poll of the meters") );//"Poll"
     l.append( tr("Forwarding table of the meters"));//"Forwarding table"
-    l.append( tr("Schedule") );//"Schedule"
     l.append( tr("Meters") );
+    l.append( tr("Schedule") );//"Schedule"
     l.append( tr("Database") );
     l.append( tr("Logs of meters") );
     l.append( tr("Hash summ" ) );
@@ -1181,6 +1190,9 @@ QMap<QString, QString> MatildaDeviceTree::getHashRealName2ico()
 QList<int> MatildaDeviceTree::getPageCanWrite()
 {
     QList<int> listInt;
+
+
+
     listInt.append( COMMAND_WRITE_ABOUT_OBJECT );
     listInt.append( 0 );
     listInt.append( 0 );
@@ -1188,14 +1200,14 @@ QList<int> MatildaDeviceTree::getPageCanWrite()
     listInt.append( 0 );
     listInt.append( 0 );
     listInt.append( 0 );
-    listInt.append( 0 );
-    listInt.append( 0 );
-    listInt.append( 0 );
-    listInt.append( 0 );
+    listInt.append( 0 );   
     listInt.append( COMMAND_WRITE_GPRS_SETT );
     listInt.append( COMMAND_WRITE_TCP_SETT   );
     listInt.append( COMMAND_WRITE_ZIGBEE_SETT );
     listInt.append( COMMAND_WRITE_UPGRADE );
+    listInt.append( 0 );
+    listInt.append( 0 );    
+    listInt.append( 0 );//exchange
     listInt.append( 0 );
     listInt.append( 0 );
     listInt.append( 0 );
@@ -1212,8 +1224,8 @@ QList<int> MatildaDeviceTree::getPageCanWrite()
     listInt.append( 0 );
     listInt.append( COMMAND_WRITE_POLL_SETT );
     listInt.append( COMMAND_WRITE_FRWRD_SETT);
-    listInt.append( COMMAND_WRITE_POLL_SCHEDULE );
     listInt.append( COMMAND_WRITE_METER_LIST_FRAMED );
+    listInt.append( COMMAND_WRITE_POLL_SCHEDULE );
     listInt.append( 0 );
     listInt.append( 0 );
     listInt.append( 0 );
@@ -1246,28 +1258,31 @@ QList<int> MatildaDeviceTree::getPageCanWrite()
 QList<int> MatildaDeviceTree::getPageCanRead()
 {
     QList<int> listInt;
+
+
+
+
+
     listInt.append( COMMAND_READ_ABOUT_OBJECT );
     listInt.append( COMMAND_READ_DATE_SETT );
     listInt.append( COMMAND_READ_STATE );
     listInt.append( 0 );
-
-    listInt.append( COMMAND_READ_POLL_STATISTIC );
     listInt.append( COMMAND_READ_SYSTEM_SETTINGS );
     listInt.append( COMMAND_READ_IFCONFIG );
     listInt.append( COMMAND_READ_TASK_INFO );
-    listInt.append( COMMAND_READ_ABOUT_PLG );
     listInt.append( COMMAND_READ_APP_LOG );
-    listInt.append( COMMAND_READ_ZBR_LOG );
     listInt.append( COMMAND_READ_GPRS_SETT );
     listInt.append( COMMAND_READ_TCP_SETT );
     listInt.append( COMMAND_READ_ZIGBEE_SETT   );
     listInt.append( 0 );
     listInt.append( 0 );
     listInt.append( COMMAND_READ_SERIAL_LOG );
+    listInt.append( COMMAND_READ_ABOUT_PLG );
+    listInt.append( COMMAND_READ_POLL_STATISTIC );
+    listInt.append( COMMAND_READ_ZBR_LOG );
     listInt.append( COMMAND_READ_PLUGIN_LOG_ERROR );
     listInt.append( COMMAND_READ_PLUGIN_LOG_WARN );
     listInt.append( 0 );
-
     listInt.append( COMMAND_READ_DA_SERVICE_SETT );
     listInt.append( COMMAND_READ_PEREDAVATOR_AC_SETT );
     listInt.append( COMMAND_READ_MATILDA_AC_SETT );
@@ -1279,8 +1294,10 @@ QList<int> MatildaDeviceTree::getPageCanRead()
     listInt.append( COMMAND_READ_BACKUP_LIST );
     listInt.append( COMMAND_READ_POLL_SETT );
     listInt.append( COMMAND_READ_FRWRD_SETT);
-    listInt.append( COMMAND_READ_POLL_SCHEDULE );
+
     listInt.append( COMMAND_READ_METER_LIST_FRAMED );
+    listInt.append( COMMAND_READ_POLL_SCHEDULE );
+
     listInt.append( COMMAND_READ_DATABASE );
     listInt.append( COMMAND_READ_METER_LOGS );
     listInt.append( COMMAND_READ_TABLE_HASH_SUMM );
