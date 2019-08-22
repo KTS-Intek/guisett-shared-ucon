@@ -123,6 +123,8 @@ QStringList MatildaDeviceTree::listPath2icon()
 
     l.append(lDevPollProtocolV6Path2icon());
 
+    l.append(lDevPollProtocolV7Path2icon());
+
 
     for(int i = 0, iMax = l.size(); i < iMax; i++){
         if(l.at(i).left(2) != ":/")
@@ -293,6 +295,11 @@ QStringList MatildaDeviceTree::infoNames()
     //protocol v5
     l.append( QString("Poll tasks"));
 
+
+    //protocol v7
+    l.append(QString("MeterIfacesLog"));
+
+
     return l;
 
 }
@@ -344,6 +351,12 @@ QStringList MatildaDeviceTree::networkSettNames()
     //protocol v6
     l.append(QString("UcProxySett"));
 
+    //protocol v7
+    l.append(QString("SavedM2MprofilesSett"));
+
+    l.append(QString("IfaceSett4groups"));
+    l.append(QString("IfaceSett4channels"));
+
     return l;
 }
 
@@ -362,8 +375,9 @@ QStringList MatildaDeviceTree::generalSettNames()
     l.append( QString("Forwarding table"));
     l.append( QString("ZbyratorTaskTable") );
 
-    ///protocol v6
+    //protocol v6
     l.append(QString("DatabaseSumm4ips"));
+
 
     return l;
 
@@ -378,6 +392,8 @@ QStringList MatildaDeviceTree::electricNames()
     QStringList l;
     l.append( QString("Meters") );
     l.append( QString("Schedule") );
+    //protocol v7
+    l.append(QString("ElMeterpollchannels"));
     return l;
 }
 
@@ -477,6 +493,9 @@ QStringList MatildaDeviceTree::realPageNameDevPoll(const int &protocolVersion)
 
     if(protocolVersion < MATILDA_PROTOCOL_VERSION_V6)//щоб видалити не підтримувані сторінки
         ls.append(lDevPollProtocolV6RealNames());
+
+    if(protocolVersion < MATILDA_PROTOCOL_VERSION_V7)//щоб видалити не підтримувані сторінки
+        ls.append(lDevPollProtocolV7RealNames());
 
     QStringList l = realPageName();//беру усі, а потім звідти видаляю ті які не підтримуються
     while(!ls.isEmpty())
@@ -670,6 +689,9 @@ QStringList MatildaDeviceTree::realPageNameDevEmul2(const int &protocolVersion)
 
         if(protocolVersion >= MATILDA_PROTOCOL_VERSION_V6)
             l.append("DatabaseSumm4ips");
+
+        if(protocolVersion >= MATILDA_PROTOCOL_VERSION_V7)
+            l.append(lDevPollProtocolV7RealNames());
     }
 
 
@@ -940,6 +962,59 @@ QStringList MatildaDeviceTree::lDevPollProtocolV6Path2icon()
 
 //---------------------------------------------------------------------
 
+QStringList MatildaDeviceTree::lDevPollProtocolV7RealNames()
+{
+    QStringList l;
+    l.append(QString("MeterIfacesLog"));
+
+    l.append(QString("ElMeterpollchannels"));
+
+    l.append(QString("SavedM2MprofilesSett"));
+    l.append(QString("IfaceSett4groups"));
+    l.append(QString("IfaceSett4channels"));
+
+    return l;
+}
+
+//---------------------------------------------------------------------
+
+QStringList MatildaDeviceTree::lDevPollProtocolV7LocalNames()
+{
+    QStringList l;
+
+    //info
+    l.append(tr("Meter exchange"));//main and additionals ifaces
+
+    //electricity meter
+    l.append(tr("Poll channels"));
+
+    //network
+    l.append(tr("Saved M2M profiles"));
+    l.append(tr("Group interface settings"));
+    l.append(tr("Channel interface settings"));
+
+
+    return l;
+}
+
+//---------------------------------------------------------------------
+
+QStringList MatildaDeviceTree::lDevPollProtocolV7Path2icon()
+{
+    QStringList l;
+    l.append( ":/katynko/svg2/sx12452.svg");
+
+    l.append( ":/katynko/svg4/sc_inserthyperlink.svg");
+
+    l.append( ":/katynko/svg4/sc_insertobject.svg");
+    l.append( ":/katynko/svg4/sc_ungroup.svg");
+    l.append( ":/katynko/svg4/sc_expandpage.svg");
+
+    return l;
+}
+
+//---------------------------------------------------------------------
+
 QStringList MatildaDeviceTree::realPageName()
 {
     QStringList l ;
@@ -1011,6 +1086,8 @@ QStringList MatildaDeviceTree::realPageName()
     l.append(lDevPollProtocolV4RealNames());
     l.append(lDevPollProtocolV5RealNames());
     l.append(lDevPollProtocolV6RealNames());//starts at 64
+
+    l.append(lDevPollProtocolV7RealNames());//starts at 70
 
     return l;
 }
@@ -1087,7 +1164,7 @@ QStringList MatildaDeviceTree::localPageName()
     l.append(lDevPollProtocolV4LocalNames());
     l.append(lDevPollProtocolV5LocalNames());
     l.append(lDevPollProtocolV6LocalNames());
-
+    l.append(lDevPollProtocolV7LocalNames());
     return l;
 }
 
@@ -1249,6 +1326,7 @@ QList<int> MatildaDeviceTree::getPageCanWrite()
     listInt.append(getPageCanWriteDevPollProtocolV4());
     listInt.append(getPageCanWriteDevPollProtocolV5());
     listInt.append(getPageCanWriteDevPollProtocolV6());
+    listInt.append(getPageCanWriteDevPollProtocolV7());
 
     return listInt;
 }
@@ -1320,6 +1398,7 @@ QList<int> MatildaDeviceTree::getPageCanRead()
     listInt.append(getPageCanReadDevPollProtocolV4());
     listInt.append(getPageCanReadDevPollProtocolV5());
     listInt.append(getPageCanReadDevPollProtocolV6());
+    listInt.append(getPageCanReadDevPollProtocolV7());
 
     return listInt;
 }
@@ -1417,6 +1496,21 @@ QList<int> MatildaDeviceTree::getPageCanReadDevPollProtocolV6()
 {
     return QList<int>() << COMMAND_READ_CALC_SUMM_4THISIPS << COMMAND_READ_FIREFLY_TABLE_SETT << COMMAND_READ_GROUP_RESCUE_SCHEDULE << COMMAND_READ_FIREFLY_STATUS_NDT << COMMAND_READ_FIREFLY_SCHEDULESTATE << COMMAND_READ_PROXYSETTINGS;
 
+}
+
+//---------------------------------------------------------------------
+
+QList<int> MatildaDeviceTree::getPageCanWriteDevPollProtocolV7()
+{
+    //protocol v7
+    return QList<int>() << 0 << COMMAND_WRITE_ELMETER_POLL_CHANNELS  << COMMAND_SET_SAVED_M2M_PROFILES << COMMAND_WRITE_IFACESETT_4_GROUPS << COMMAND_WRITE_IFACESETT_4_CHANNELS   ;
+}
+
+//---------------------------------------------------------------------
+
+QList<int> MatildaDeviceTree::getPageCanReadDevPollProtocolV7()
+{
+    return QList<int>() << COMMAND_READ_METER_EXCHANGE_LOG << COMMAND_READ_ELMETER_POLL_CHANNELS << COMMAND_GET_SAVED_M2M_PROFILES << COMMAND_READ_IFACESETT_4_GROUPS << COMMAND_READ_IFACESETT_4_CHANNELS;
 }
 
 //---------------------------------------------------------------------
