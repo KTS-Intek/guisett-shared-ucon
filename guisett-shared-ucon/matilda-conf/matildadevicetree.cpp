@@ -125,6 +125,7 @@ QStringList MatildaDeviceTree::listPath2icon()
 
     l.append(lDevPollProtocolV7Path2icon());
 
+    l.append(lDevPollProtocolV8Path2icon());
 
     for(int i = 0, iMax = l.size(); i < iMax; i++){
         if(l.at(i).left(2) != ":/")
@@ -357,6 +358,10 @@ QStringList MatildaDeviceTree::networkSettNames()
     l.append(QString("IfaceSett4groups"));
     l.append(QString("IfaceSett4channels"));
 
+    //protocol v8
+    l.append(QString("TCPMediumServer"));
+    l.append(QString("GSMNotifications"));
+
     return l;
 }
 
@@ -496,6 +501,9 @@ QStringList MatildaDeviceTree::realPageNameDevPoll(const int &protocolVersion)
 
     if(protocolVersion < MATILDA_PROTOCOL_VERSION_V7)//щоб видалити не підтримувані сторінки
         ls.append(lDevPollProtocolV7RealNames());
+
+    if(protocolVersion < MATILDA_PROTOCOL_VERSION_V8)//щоб видалити не підтримувані сторінки
+        ls.append(lDevPollProtocolV8RealNames());
 
     QStringList l = realPageName();//беру усі, а потім звідти видаляю ті які не підтримуються
     while(!ls.isEmpty())
@@ -692,6 +700,9 @@ QStringList MatildaDeviceTree::realPageNameDevEmul2(const int &protocolVersion)
 
         if(protocolVersion >= MATILDA_PROTOCOL_VERSION_V7)
             l.append(lDevPollProtocolV7RealNames());
+
+        if(protocolVersion >= MATILDA_PROTOCOL_VERSION_V8)
+            l.append(lDevPollProtocolV8RealNames());
     }
 
 
@@ -1013,6 +1024,36 @@ QStringList MatildaDeviceTree::lDevPollProtocolV7Path2icon()
     return l;
 }
 
+QStringList MatildaDeviceTree::lDevPollProtocolV8RealNames()
+{
+    QStringList l;
+    l.append(QString("TCPMediumServer"));
+    l.append(QString("GSMNotifications"));
+    return l;
+}
+
+QStringList MatildaDeviceTree::lDevPollProtocolV8LocalNames()
+{
+    QStringList l;
+
+    l.append(tr("TCP Medium Server"));//main and additionals ifaces
+    l.append(tr("GSM Notifications"));
+
+    return l;
+}
+
+QStringList MatildaDeviceTree::lDevPollProtocolV8Path2icon()
+{
+    QStringList l;
+
+
+    l.append( ":/katynko/svg4/sc_insertobject.svg");
+    l.append( ":/katynko/svg4/sc_insertobject.svg");
+
+
+    return l;
+}
+
 //---------------------------------------------------------------------
 
 QStringList MatildaDeviceTree::realPageName()
@@ -1088,6 +1129,8 @@ QStringList MatildaDeviceTree::realPageName()
     l.append(lDevPollProtocolV6RealNames());//starts at 64
 
     l.append(lDevPollProtocolV7RealNames());//starts at 70
+
+    l.append(lDevPollProtocolV8RealNames());//starts at 75
 
     return l;
 }
@@ -1165,6 +1208,9 @@ QStringList MatildaDeviceTree::localPageName()
     l.append(lDevPollProtocolV5LocalNames());
     l.append(lDevPollProtocolV6LocalNames());
     l.append(lDevPollProtocolV7LocalNames());
+    l.append(lDevPollProtocolV8LocalNames());
+
+
     return l;
 }
 
@@ -1327,6 +1373,7 @@ QList<int> MatildaDeviceTree::getPageCanWrite()
     listInt.append(getPageCanWriteDevPollProtocolV5());
     listInt.append(getPageCanWriteDevPollProtocolV6());
     listInt.append(getPageCanWriteDevPollProtocolV7());
+    listInt.append(getPageCanWriteDevPollProtocolV8());
 
     return listInt;
 }
@@ -1399,6 +1446,7 @@ QList<int> MatildaDeviceTree::getPageCanRead()
     listInt.append(getPageCanReadDevPollProtocolV5());
     listInt.append(getPageCanReadDevPollProtocolV6());
     listInt.append(getPageCanReadDevPollProtocolV7());
+    listInt.append(getPageCanReadDevPollProtocolV8());
 
     return listInt;
 }
@@ -1511,6 +1559,21 @@ QList<int> MatildaDeviceTree::getPageCanWriteDevPollProtocolV7()
 QList<int> MatildaDeviceTree::getPageCanReadDevPollProtocolV7()
 {
     return QList<int>() << COMMAND_READ_METER_EXCHANGE_LOG << COMMAND_READ_ELMETER_POLL_CHANNELS << COMMAND_GET_SAVED_M2M_PROFILES << COMMAND_READ_IFACESETT_4_GROUPS << COMMAND_READ_IFACESETT_4_CHANNELS;
+}
+
+//---------------------------------------------------------------------
+
+QList<int> MatildaDeviceTree::getPageCanWriteDevPollProtocolV8()
+{
+    //protocol v8
+    return QList<int>() << COMMAND_WRITE_TCP_MEDIUM_SERVICE << COMMAND_WRITE_GSM_NOTIFICATIONS ;
+}
+
+//---------------------------------------------------------------------
+
+QList<int> MatildaDeviceTree::getPageCanReadDevPollProtocolV8()
+{
+    return QList<int>() << COMMAND_READ_TCP_MEDIUM_SERVICE << COMMAND_READ_GSM_NOTIFICATIONS;
 }
 
 //---------------------------------------------------------------------

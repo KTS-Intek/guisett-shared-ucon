@@ -111,6 +111,13 @@ public:
     static QStringList lDevPollProtocolV7Path2icon();
 
 
+
+
+    static QStringList lDevPollProtocolV8RealNames();
+    static QStringList lDevPollProtocolV8LocalNames();
+    static QStringList lDevPollProtocolV8Path2icon();
+
+
     static QStringList realPageName();//en_GB
 
     static QStringList localPageName();//local lang
@@ -150,6 +157,9 @@ public:
 
     static QList<int> getPageCanWriteDevPollProtocolV7();
     static QList<int> getPageCanReadDevPollProtocolV7();
+
+    static QList<int> getPageCanWriteDevPollProtocolV8();
+    static QList<int> getPageCanReadDevPollProtocolV8();
 
 };
 
