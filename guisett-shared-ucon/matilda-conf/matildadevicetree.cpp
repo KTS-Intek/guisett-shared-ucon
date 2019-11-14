@@ -1047,8 +1047,8 @@ QStringList MatildaDeviceTree::lDevPollProtocolV8Path2icon()
     QStringList l;
 
 
-    l.append( ":/katynko/svg4/sc_insertobject.svg");
-    l.append( ":/katynko/svg4/sc_insertobject.svg");
+    l.append( ":/katynko/svg4/actionview026.svg");
+    l.append( ":/katynko/svg/irc-voice.svg");
 
 
     return l;
