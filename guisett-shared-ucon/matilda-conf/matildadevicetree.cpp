@@ -126,6 +126,7 @@ QStringList MatildaDeviceTree::listPath2icon()
     l.append(lDevPollProtocolV7Path2icon());
 
     l.append(lDevPollProtocolV8Path2icon());
+    l.append(lDevPollProtocolV9Path2icon());
 
     for(int i = 0, iMax = l.size(); i < iMax; i++){
         if(l.at(i).left(2) != ":/")
@@ -300,6 +301,13 @@ QStringList MatildaDeviceTree::infoNames()
     //protocol v7
     l.append(QString("MeterIfacesLog"));
 
+    //protocol v8
+    l.append(QString("GSMCommandsLog"));
+    l.append(QString("TCPServerMediumLogs"));
+    l.append(QString("TCPZigBeeServiceLog"));
+    l.append(QString("TCPZigBeeServiceState"));
+    l.append(QString("UCServiceState"));
+    l.append(QString("DaAdditionalChannelsLog"));
 
     return l;
 
@@ -383,7 +391,8 @@ QStringList MatildaDeviceTree::generalSettNames()
     //protocol v6
     l.append(QString("DatabaseSumm4ips"));
 
-
+    //protocol v9
+    l.append(QString("DatabaseLimits"));
     return l;
 
 
@@ -399,6 +408,10 @@ QStringList MatildaDeviceTree::electricNames()
     l.append( QString("Schedule") );
     //protocol v7
     l.append(QString("ElMeterpollchannels"));
+//protocol v8
+    l.append(QString("RealViewAdvanced"));
+    //protocol v9
+    l.append(QString("EnrgMonitors"));
     return l;
 }
 
@@ -504,6 +517,9 @@ QStringList MatildaDeviceTree::realPageNameDevPoll(const int &protocolVersion)
 
     if(protocolVersion < MATILDA_PROTOCOL_VERSION_V8)//щоб видалити не підтримувані сторінки
         ls.append(lDevPollProtocolV8RealNames());
+
+    if(protocolVersion < MATILDA_PROTOCOL_VERSION_V9)//щоб видалити не підтримувані сторінки
+        ls.append(lDevPollProtocolV9RealNames());
 
     QStringList l = realPageName();//беру усі, а потім звідти видаляю ті які не підтримуються
     while(!ls.isEmpty())
@@ -701,8 +717,17 @@ QStringList MatildaDeviceTree::realPageNameDevEmul2(const int &protocolVersion)
         if(protocolVersion >= MATILDA_PROTOCOL_VERSION_V7)
             l.append(lDevPollProtocolV7RealNames());
 
-        if(protocolVersion >= MATILDA_PROTOCOL_VERSION_V8)
-            l.append(lDevPollProtocolV8RealNames());
+        if(protocolVersion >= MATILDA_PROTOCOL_VERSION_V8){
+
+
+
+            l.append(QString("TCPZigBeeServiceLog"));
+            l.append(QString("UCServiceState"));
+
+            l.append(QString("DaAdditionalChannelsLog"));
+
+
+        }
     }
 
 
@@ -1029,6 +1054,16 @@ QStringList MatildaDeviceTree::lDevPollProtocolV8RealNames()
     QStringList l;
     l.append(QString("TCPMediumServer"));
     l.append(QString("GSMNotifications"));
+    l.append(QString("GSMCommandsLog"));
+    l.append(QString("TCPServerMediumLogs"));
+
+    l.append(QString("TCPZigBeeServiceLog"));
+    l.append(QString("TCPZigBeeServiceState"));
+    l.append(QString("UCServiceState"));
+
+    l.append(QString("DaAdditionalChannelsLog"));
+    l.append(QString("RealViewAdvanced"));
+
     return l;
 }
 
@@ -1038,6 +1073,16 @@ QStringList MatildaDeviceTree::lDevPollProtocolV8LocalNames()
 
     l.append(tr("TCP Medium Server"));//main and additionals ifaces
     l.append(tr("GSM Notifications"));
+    l.append(tr("GSM Commands Log"));
+    l.append(tr("TCP Server Medium Logs"));
+
+
+    l.append(tr("TCP/ZigBee Service Log"));
+    l.append(tr("TCP/ZigBee Service State"));
+    l.append(tr("UC Service State"));
+
+    l.append(tr("Quick Direct access logs"));
+    l.append(tr("Real View Advanced"));
 
     return l;
 }
@@ -1049,9 +1094,52 @@ QStringList MatildaDeviceTree::lDevPollProtocolV8Path2icon()
 
     l.append( ":/katynko/svg4/actionview026.svg");
     l.append( ":/katynko/svg/irc-voice.svg");
+    l.append( ":/katynko/svg/view-list-text.svg");
+    l.append( ":/katynko/svg/format-list-ordered.svg");
 
+    l.append( ":/katynko/svg/view-list-text.svg");
+    l.append( ":/katynko/svg/edit-table-insert-row-below.svg");
+    l.append( ":/katynko/svg/table.svg");
+    l.append( ":/katynko/svg/view-list-text.svg");
+    l.append( ":/katynko/svg/format-list-ordered.svg");
 
     return l;
+}
+
+//---------------------------------------------------------------------
+
+QStringList MatildaDeviceTree::lDevPollProtocolV9RealNames()
+{
+    QStringList l;
+    l.append(QString("EnrgMonitors"));
+    l.append(QString("DatabaseLimits"));
+
+    return l;
+}
+
+//---------------------------------------------------------------------
+
+QStringList MatildaDeviceTree::lDevPollProtocolV9LocalNames()
+{
+    QStringList l;
+    l.append(tr("Energy monitors"));
+    l.append(tr("Database limits"));
+
+    return l;
+}
+
+//---------------------------------------------------------------------
+
+QStringList MatildaDeviceTree::lDevPollProtocolV9Path2icon()
+{
+    QStringList l;
+
+
+    l.append( ":/katynko/svg4/actionview026.svg");
+    l.append( ":/katynko/svg4/actionview026.svg");
+
+    return l;
+
 }
 
 //---------------------------------------------------------------------
@@ -1132,6 +1220,8 @@ QStringList MatildaDeviceTree::realPageName()
 
     l.append(lDevPollProtocolV8RealNames());//starts at 75
 
+    l.append(lDevPollProtocolV9RealNames());//starts at 84
+
     return l;
 }
 
@@ -1209,6 +1299,7 @@ QStringList MatildaDeviceTree::localPageName()
     l.append(lDevPollProtocolV6LocalNames());
     l.append(lDevPollProtocolV7LocalNames());
     l.append(lDevPollProtocolV8LocalNames());
+    l.append(lDevPollProtocolV9LocalNames());
 
 
     return l;
@@ -1374,6 +1465,7 @@ QList<int> MatildaDeviceTree::getPageCanWrite()
     listInt.append(getPageCanWriteDevPollProtocolV6());
     listInt.append(getPageCanWriteDevPollProtocolV7());
     listInt.append(getPageCanWriteDevPollProtocolV8());
+    listInt.append(getPageCanWriteDevPollProtocolV9());
 
     return listInt;
 }
@@ -1447,6 +1539,7 @@ QList<int> MatildaDeviceTree::getPageCanRead()
     listInt.append(getPageCanReadDevPollProtocolV6());
     listInt.append(getPageCanReadDevPollProtocolV7());
     listInt.append(getPageCanReadDevPollProtocolV8());
+    listInt.append(getPageCanReadDevPollProtocolV9());
 
     return listInt;
 }
@@ -1566,14 +1659,27 @@ QList<int> MatildaDeviceTree::getPageCanReadDevPollProtocolV7()
 QList<int> MatildaDeviceTree::getPageCanWriteDevPollProtocolV8()
 {
     //protocol v8
-    return QList<int>() << COMMAND_WRITE_TCP_MEDIUM_SERVICE << COMMAND_WRITE_GSM_NOTIFICATIONS ;
+    return QList<int>() << COMMAND_WRITE_TCP_MEDIUM_SERVICE << COMMAND_WRITE_GSM_NOTIFICATIONS << 0 << 0 << 0
+                        << 0 << 0 << 0 << COMMAND_WRITE_RV_ELMETERS_RULES;
 }
 
 //---------------------------------------------------------------------
 
 QList<int> MatildaDeviceTree::getPageCanReadDevPollProtocolV8()
 {
-    return QList<int>() << COMMAND_READ_TCP_MEDIUM_SERVICE << COMMAND_READ_GSM_NOTIFICATIONS;
+    return QList<int>() << COMMAND_READ_TCP_MEDIUM_SERVICE << COMMAND_READ_GSM_NOTIFICATIONS << COMMAND_READ_MATILDA_UART_LOG << COMMAND_READ_TCP_MEDIUM_SERVICE_LOGS << COMMAND_READ_PEREDAVATOR_APP_LOG
+                        << COMMAND_READ_PEREDAVATOR_CLNT_STATE  << COMMAND_READ_UC_CLNT_STATE << COMMAND_READ_DA_ADDITIONAL_CHANNEL_LOGS << COMMAND_READ_RV_ELMETERS_RULES;
+}
+
+QList<int> MatildaDeviceTree::getPageCanWriteDevPollProtocolV9()
+{
+    return QList<int>() << COMMAND_WRITE_ENERGY_MONITORS_LIST << COMMAND_SET_DBLIMITS;
+}
+
+QList<int> MatildaDeviceTree::getPageCanReadDevPollProtocolV9()
+{
+    return QList<int>() << COMMAND_READ_ENERGY_MONITORS_LIST << COMMAND_GET_DBLIMITS;
+
 }
 
 //---------------------------------------------------------------------
