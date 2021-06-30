@@ -1,26 +1,20 @@
 #ifndef MATILDADEVICETREE_H
 #define MATILDADEVICETREE_H
 
-#include <QObject>
+///[!] guisett-shared
+#include "uc-dev/ucdevtreeview.h"
+
 #include <QStringList>
 #include <QHash>
 #include <QMap>
 
-class MatildaDeviceTree : public QObject
+class MatildaDeviceTree : public UCDevTreeView
 {
     Q_OBJECT
 public:
     explicit MatildaDeviceTree(QObject *parent = nullptr);
 
-    struct MatildaDevTreeView
-    {
-        QHash<QString,QStringList> h4devTree;
-        QMap<QString, QString> hashRealName2ico;
-        QStringList lKeyDevTree;
-        MatildaDevTreeView() {}
-        MatildaDevTreeView(const QHash<QString,QStringList> &h4devTree, const QMap<QString, QString> &hashRealName2ico, const QStringList &lKeyDevTree) :
-            h4devTree(h4devTree), hashRealName2ico(hashRealName2ico), lKeyDevTree(lKeyDevTree) {}
-    };
+
 
 
 
@@ -38,9 +32,6 @@ public:
     static MatildaDevTreeView pageName4devTree();//en_GB
 
 
-    static void addChapter(const QString &key, const QStringList &names, QStringList &lKeys, QHash<QString, QStringList> &h);
-
-    static void addChapter(const QString &key, const QStringList &names, QStringList &lKeys, QHash<QString, QStringList> &h, QMap<QString, QString> &hashRealName2ico, const QString &icon);
 
     static QStringList infoNames();
 
@@ -57,6 +48,13 @@ public:
     static QStringList electricNames();
 
     static QStringList waterNames();
+
+    static QStringList gasNames();
+
+    static QStringList pulseNames();
+
+    static QStringList modbusNames();
+
 
     static QStringList prepaidNames();
 
@@ -121,6 +119,11 @@ public:
     static QStringList lDevPollProtocolV9RealNames();
     static QStringList lDevPollProtocolV9LocalNames();
     static QStringList lDevPollProtocolV9Path2icon();
+
+
+    static QStringList lDevPollProtocolV11RealNames();
+    static QStringList lDevPollProtocolV11LocalNames();
+    static QStringList lDevPollProtocolV11Path2icon();
 
     static QStringList realPageName();//en_GB
 

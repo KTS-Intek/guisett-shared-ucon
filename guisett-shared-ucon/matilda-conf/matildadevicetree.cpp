@@ -4,7 +4,7 @@
 
 //---------------------------------------------------------------------
 
-MatildaDeviceTree::MatildaDeviceTree(QObject *parent) : QObject(parent)
+MatildaDeviceTree::MatildaDeviceTree(QObject *parent) : UCDevTreeView(parent)
 {
 
 }
@@ -128,6 +128,8 @@ QStringList MatildaDeviceTree::listPath2icon()
     l.append(lDevPollProtocolV8Path2icon());
     l.append(lDevPollProtocolV9Path2icon());
 
+    l.append(lDevPollProtocolV11Path2icon());
+
     for(int i = 0, iMax = l.size(); i < iMax; i++){
         if(l.at(i).left(2) != ":/")
             l.replace(i, ":/katynko/svg2/empty.svg");
@@ -247,24 +249,14 @@ MatildaDeviceTree::MatildaDevTreeView MatildaDeviceTree::pageName4devTree()
 
     addChapter(QString("Application"), appNames(), lKeys, h, hashRealName2ico, ":/katynko/svg3/run-build.svg");
 
+    addChapter(QString("Pulse meters"), pulseNames(), lKeys, h, hashRealName2ico, ":/katynko/svg5/dstv_low.svg");
+    //    addChapter(QString("Gas meters"), gasNames(), lKeys, h, hashRealName2ico, ":/katynko/svg4/gas-meter.svg");
+
+    addChapter(QString("Modbus"), modbusNames(), lKeys, h, hashRealName2ico, ":/katynko/svg5/modbus-l.svg");
+
 
 //    h.insert("\r\nlKeys\r\n", lKeys);
     return MatildaDevTreeView(h, hashRealName2ico, lKeys);
-}
-
-//---------------------------------------------------------------------
-
-void MatildaDeviceTree::addChapter(const QString &key, const QStringList &names, QStringList &lKeys, QHash<QString, QStringList> &h)
-{
-    QMap<QString, QString> hs;
-    addChapter(key, names, lKeys, h, hs, "hs");
-}
-
-void MatildaDeviceTree::addChapter(const QString &key, const QStringList &names, QStringList &lKeys, QHash<QString, QStringList> &h, QMap<QString, QString> &hashRealName2ico, const QString &icon)
-{
-    lKeys.append(key);
-    h.insert(key, names);
-    hashRealName2ico.insert(key, icon);
 }
 
 //---------------------------------------------------------------------
@@ -309,6 +301,10 @@ QStringList MatildaDeviceTree::infoNames()
     l.append(QString("UCServiceState"));
     l.append(QString("DaAdditionalChannelsLog"));
 
+
+    //protocol v9
+    l.append(QString("DatabaseLogs"));
+
     return l;
 
 }
@@ -332,7 +328,7 @@ QStringList MatildaDeviceTree::pollDataNames()
     QStringList l;
     l.append( QString("Database") );
 //    l.append( QString("Meter logs") );
-    l.append( QString("Hash summ" ) );
+//    l.append( QString("Hash summ" ) );//do not show it
     return l;
 }
 
@@ -424,6 +420,44 @@ QStringList MatildaDeviceTree::waterNames()
     l.append(QString("WaterMeters"));//Water meters
     l.append(QString("Last active profile"));
     l.append(QString("WaterSchedule"));//Water schedule
+    return l;
+}
+
+//---------------------------------------------------------------------
+
+QStringList MatildaDeviceTree::gasNames()
+{
+    QStringList l;
+
+    l.append(QString("GasMeters"));//Gas meters
+    l.append(QString("Gas Last active profile"));
+    l.append(QString("GasSchedule"));//Gas schedule
+    return l;
+}
+
+//---------------------------------------------------------------------
+
+QStringList MatildaDeviceTree::pulseNames()
+{
+    QStringList l;
+
+    l.append(QString("PulseMeters"));//Pulse meters
+//    l.append(QString("Pulse Last active profile"));
+    l.append(QString("PulseSchedule"));//Pulse schedule
+    return l;
+}
+
+QStringList MatildaDeviceTree::modbusNames()
+{
+    QStringList l;
+
+    l.append(QString("ModbusSerialPortSettings"));
+    l.append(QString("ModbusTcpSettings"));
+    l.append(QString("ModbusSettings"));
+    l.append(QString("ModbusDevicesSettings"));
+    l.append(QString("ModbusLogs"));
+    l.append(QString("ModbusEvents"));
+
     return l;
 }
 
@@ -521,6 +555,9 @@ QStringList MatildaDeviceTree::realPageNameDevPoll(const int &protocolVersion)
     if(protocolVersion < MATILDA_PROTOCOL_VERSION_V9)//щоб видалити не підтримувані сторінки
         ls.append(lDevPollProtocolV9RealNames());
 
+    if(protocolVersion < MATILDA_PROTOCOL_VERSION_V11)//щоб видалити не підтримувані сторінки
+        ls.append(lDevPollProtocolV11RealNames());
+
     QStringList l = realPageName();//беру усі, а потім звідти видаляю ті які не підтримуються
     while(!ls.isEmpty())
         l.removeOne(ls.takeFirst());
@@ -555,7 +592,7 @@ QStringList MatildaDeviceTree::realPageNameDevStor()
 
     l.append( QString("Database") );
 //    l.append( QString("Meter logs") );
-    l.append( QString("Hash summ" ) );
+//    l.append( QString("Hash summ" ) );
 
     //protocol v2
     l.append( QString("IP Route"));//v2
@@ -704,7 +741,7 @@ QStringList MatildaDeviceTree::realPageNameDevEmul2(const int &protocolVersion)
     l.append( QString("Meters") );
     l.append( QString("Database") );
 //    l.append( QString("Meter logs") );
-    l.append( QString("Hash summ" ) );
+//    l.append( QString("Hash summ" ) );
 
     if(protocolVersion >= MATILDA_PROTOCOL_VERSION_V5){
         l.append(lDevPollProtocolV5RealNames());
@@ -1049,6 +1086,8 @@ QStringList MatildaDeviceTree::lDevPollProtocolV7Path2icon()
     return l;
 }
 
+//---------------------------------------------------------------------
+
 QStringList MatildaDeviceTree::lDevPollProtocolV8RealNames()
 {
     QStringList l;
@@ -1066,6 +1105,8 @@ QStringList MatildaDeviceTree::lDevPollProtocolV8RealNames()
 
     return l;
 }
+
+//---------------------------------------------------------------------
 
 QStringList MatildaDeviceTree::lDevPollProtocolV8LocalNames()
 {
@@ -1086,6 +1127,8 @@ QStringList MatildaDeviceTree::lDevPollProtocolV8LocalNames()
 
     return l;
 }
+
+//---------------------------------------------------------------------
 
 QStringList MatildaDeviceTree::lDevPollProtocolV8Path2icon()
 {
@@ -1113,6 +1156,7 @@ QStringList MatildaDeviceTree::lDevPollProtocolV9RealNames()
     QStringList l;
     l.append(QString("EnrgMonitors"));
     l.append(QString("DatabaseLimits"));
+    l.append(QString("DatabaseLogs"));
 
     return l;
 }
@@ -1124,6 +1168,7 @@ QStringList MatildaDeviceTree::lDevPollProtocolV9LocalNames()
     QStringList l;
     l.append(tr("Energy monitors"));
     l.append(tr("Database limits"));
+    l.append(tr("Database logs"));
 
     return l;
 }
@@ -1137,9 +1182,90 @@ QStringList MatildaDeviceTree::lDevPollProtocolV9Path2icon()
 
     l.append( ":/katynko/svg4/actionview026.svg");
     l.append( ":/katynko/svg4/actionview026.svg");
+    l.append( ":/katynko/svg4/actionview026.svg");
 
     return l;
 
+}
+
+//---------------------------------------------------------------------
+
+QStringList MatildaDeviceTree::lDevPollProtocolV11RealNames()
+{
+    QStringList l;
+
+
+//    l.append(QString("GasMeters"));//Gas meters
+//    l.append(QString("Gas Last active profile"));
+//    l.append(QString("GasSchedule"));//Gas schedule
+
+
+    l.append(QString("PulseMeters"));//Pulse meters
+//    l.append(QString("Pulse Last active profile"));
+    l.append(QString("PulseSchedule"));//Gas schedule
+
+
+
+    l.append(QString("ModbusSerialPortSettings"));
+    l.append(QString("ModbusTcpSettings"));
+    l.append(QString("ModbusSettings"));
+    l.append(QString("ModbusDevicesSettings"));
+    l.append(QString("ModbusLogs"));
+    l.append(QString("ModbusEvents"));
+
+
+
+    return l;
+}
+
+//---------------------------------------------------------------------
+
+QStringList MatildaDeviceTree::lDevPollProtocolV11LocalNames()
+{
+    QStringList l;
+
+//    l.append(tr("Gas Meters"));//Gas meters
+//    l.append(tr("Gas Last active profile"));
+//    l.append(tr("GasSchedule"));//Gas schedule
+
+
+    l.append(tr("Pulse Meters"));//Pulse meters
+//    l.append(tr("Pulse Last active profile"));
+    l.append(tr("Pulse Schedule"));//Gas schedule
+
+
+
+    l.append(tr("Serial Port"));
+    l.append(tr("Tcp Service"));
+    l.append(tr("General Settings"));
+    l.append(tr("Devices table"));
+    l.append(tr("Interface Logs"));
+    l.append(tr("Events"));
+
+    return l;
+
+}
+
+//---------------------------------------------------------------------
+
+QStringList MatildaDeviceTree::lDevPollProtocolV11Path2icon()
+{
+    QStringList l;
+//    l.append( ":/katynko/svg4/actionview026.svg"); Gas meters
+//    l.append( ":/katynko/svg4/actionview026.svg");
+//    l.append( ":/katynko/svg4/actionview026.svg");
+
+    l.append( ":/katynko/svg5/gtk-index.svg");
+    l.append( ":/katynko/svg2/dashboard-show.svg");
+
+    l.append( ":/katynko/svg5/lc_tabdialog.svg");
+    l.append( ":/katynko/svg/network-disconnect.svg");
+    l.append( ":/katynko/svg2/configure.svg");
+    l.append( ":/katynko/svg5/sc_inserttable.svg");
+    l.append( ":/katynko/svg/view-list-text.svg");
+    l.append( ":/katynko/svg2/view-readermode-gr2.svg" );
+
+    return l;
 }
 
 //---------------------------------------------------------------------
@@ -1221,6 +1347,7 @@ QStringList MatildaDeviceTree::realPageName()
     l.append(lDevPollProtocolV8RealNames());//starts at 75
 
     l.append(lDevPollProtocolV9RealNames());//starts at 84
+    l.append(lDevPollProtocolV11RealNames());//starts at 84
 
     return l;
 }
@@ -1300,6 +1427,7 @@ QStringList MatildaDeviceTree::localPageName()
     l.append(lDevPollProtocolV7LocalNames());
     l.append(lDevPollProtocolV8LocalNames());
     l.append(lDevPollProtocolV9LocalNames());
+    l.append(lDevPollProtocolV11LocalNames());
 
 
     return l;
@@ -1356,47 +1484,22 @@ QStringList MatildaDeviceTree::localChapterName()
 
 QHash<QString, QString> MatildaDeviceTree::hashRealName2localName()
 {
-    const QStringList lr = realPageName() + realChapterName();
-    const QStringList ll = localPageName() + localChapterName();
-    QHash<QString,QString> h;
-    for(int i = 0, iMax = lr.size(), iMax2 = ll.size(); i < iMax && i < iMax2; i++)
-        h.insert(lr.at(i), ll.at(i));
-    return h;
+    return UCDevTreeView::hashRealName2localName(localPageName() + localChapterName(), realPageName() + realChapterName());
 }
 
 //---------------------------------------------------------------------
 
 QHash<QString, QString> MatildaDeviceTree::hashLocalName2realName()
 {
-    const QStringList lr = realPageName() + realChapterName();
-    const QStringList ll = localPageName() + localChapterName();
-    QHash<QString,QString> h;
-    for(int i = 0, iMax = lr.size(), iMax2 = ll.size(); i < iMax && i < iMax2; i++)
-        h.insert(ll.at(i), lr.at(i));
+    return UCDevTreeView::hashLocalName2realName(localPageName() + localChapterName(), realPageName() + realChapterName());
 
-
-
-
-    return h;
 }
 //---------------------------------------------------------------------
 QMap<QString, QString> MatildaDeviceTree::getHashRealName2ico()
 {
-    QMap<QString, QString> hashRealName2ico;
-
-    const QStringList lPath2icon = listPath2icon();
-    const QStringList listRealName = realPageName();
-    for(int i = 0, iMax = lPath2icon.size(), iMax2 = listRealName.size(); i < iMax && i < iMax2; i++ )
-        hashRealName2ico.insert(listRealName.at(i), lPath2icon.at(i));
+    return UCDevTreeView::getHashRealName2ico(listPath2icon(), realPageName());
 
 
-//    if(allIcons){
-//        const QStringList lPath2icon = getListPath2iconMain();
-//        const QStringList listRealName = getListRealMainNames();
-//        for(int i = 0, iMax = lPath2icon.size(), iMax2 = listRealName.size(); i < iMax && i < iMax2; i++ )
-//            hashRealName2ico.insert(listRealName.at(i), lPath2icon.at(i));
-//    }
-    return hashRealName2ico;
 }
 
 //---------------------------------------------------------------------
@@ -1550,7 +1653,7 @@ QList<int> MatildaDeviceTree::getPageCanWriteSvahaOnly()
 {
     QList<int> l;
     //svaha-sync
-    l << COMMAND_WRITE_SVAHA_CONN_SETT << COMMAND_WRITE_SVAHA_BACKUP_SETT << 0 << 0;
+    l << COMMAND_WRITE_M2MSRVS_CONN_SETT << COMMAND_WRITE_M2MSRVS_BACKUP_SETT << 0 << 0;
 
     //ntp-service
     l << COMMAND_WRITE_SNTP_SETT << 0 << 0 << 0 << 0;
@@ -1563,7 +1666,7 @@ QList<int> MatildaDeviceTree::getPageCanReadSvahaOnly()
 {
     QList<int> l;
     //svaha-service
-    l << COMMAND_READ_SVAHA_CONN_SETT << COMMAND_READ_SVAHA_BACKUP_SETT << COMMAND_READ_CONNECT_LIST << COMMAND_READ_BACKUPLIST_FRAMED;
+    l << COMMAND_READ_M2MSRVS_CONN_SETT << COMMAND_READ_M2MSRVS_BACKUP_SETT << COMMAND_READ_M2MSRVS_CONNECTLIST << COMMAND_READ_M2MSRVS_BACKUPLIST_FRMD;
     //ntp-service
     l << COMMAND_READ_SNTP_SETT << COMMAND_READ_SNTP_IP_HISTORY << COMMAND_READ_SNTP_LOG_EV << COMMAND_READ_SNTP_LOG_ERR << COMMAND_READ_SNTP_LOG_WARN ;
     return l;
@@ -1673,12 +1776,12 @@ QList<int> MatildaDeviceTree::getPageCanReadDevPollProtocolV8()
 
 QList<int> MatildaDeviceTree::getPageCanWriteDevPollProtocolV9()
 {
-    return QList<int>() << COMMAND_WRITE_ENERGY_MONITORS_LIST << COMMAND_SET_DBLIMITS;
+    return QList<int>() << COMMAND_WRITE_ENERGY_MONITORS_LIST << COMMAND_SET_DBLIMITS << 0;
 }
 
 QList<int> MatildaDeviceTree::getPageCanReadDevPollProtocolV9()
 {
-    return QList<int>() << COMMAND_READ_ENERGY_MONITORS_LIST << COMMAND_GET_DBLIMITS;
+    return QList<int>() << COMMAND_READ_ENERGY_MONITORS_LIST << COMMAND_GET_DBLIMITS << COMMAND_READ_SQLT_MEDIUM_LOG;
 
 }
 
