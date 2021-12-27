@@ -177,7 +177,7 @@ QStringList MatildaDeviceTree::realPageNameByDev(const int &devType, const int &
     case DEV_POLL            : l = realPageNameDevPoll(protocolVersion) ; break;
     case DEV_STOR            : l = realPageNameDevStor() ; break;
     case DEV_GATE            : l = realPageNameDevGate() ; break;
-    case DEV_SVAHA           : l = realPageNameDevSvaha(); break;
+    case DEV_SVAHA           : l = realPageNameDevSvaha(protocolVersion); break;
 
     case DEV_POLL_4_STAFF   : l = realPageNameDevPoll4staff(); break;
 
@@ -245,7 +245,7 @@ MatildaDeviceTree::MatildaDevTreeView MatildaDeviceTree::pageName4devTree()
 
     addChapter(QString("General settings"), generalSettNames(), lKeys, h, hashRealName2ico, ":/katynko/svg/applications-system.svg");
 
-    addChapter(QString("M2M Service"), m2mNames(), lKeys, h, hashRealName2ico, ":/katynko/svg/network-disconnect.svg");
+    addChapter(QString("M2M Service"), m2mNamesAll(), lKeys, h, hashRealName2ico, ":/katynko/svg/network-disconnect.svg");
 
     addChapter(QString("Application"), appNames(), lKeys, h, hashRealName2ico, ":/katynko/svg3/run-build.svg");
 
@@ -449,6 +449,8 @@ QStringList MatildaDeviceTree::pulseNames()
     return l;
 }
 
+//---------------------------------------------------------------------
+
 QStringList MatildaDeviceTree::modbusNames()
 {
     QStringList l;
@@ -461,6 +463,19 @@ QStringList MatildaDeviceTree::modbusNames()
     l.append(QString("ModbusEvents"));
     l.append(QString("ModbusTcpServiceHistory"));
 
+    return l;
+}
+
+//---------------------------------------------------------------------
+
+QStringList MatildaDeviceTree::m2mHttpNames()
+{
+    QStringList l;
+    //m2m service
+    l.append(QString("M2MHttpApiks"));
+    l.append(QString("M2MHttpGeneral"));
+    l.append(QString("M2MHttpEvents"));
+    l.append(QString("M2MHttpServiceHistory"));
     return l;
 }
 
@@ -503,6 +518,13 @@ QStringList MatildaDeviceTree::smartLightNames()
 
     return l;
 }
+
+QStringList MatildaDeviceTree::m2mNamesAll()
+{
+    auto l = m2mNames();
+    l.append(m2mHttpNames());
+    return l;
+}
 //---------------------------------------------------------------------
 QStringList MatildaDeviceTree::m2mNames()
 {
@@ -537,6 +559,8 @@ QStringList MatildaDeviceTree::appNames()
 QStringList MatildaDeviceTree::realPageNameDevPoll(const int &protocolVersion)
 {
     QStringList ls = lOnlySvahaSyncRealNames();
+    ls.append(m2mHttpNames());
+
     if(protocolVersion < MATILDA_PROTOCOL_VERSION_V3)
         ls.append(lDevPollProtocolV3RealNames());
 
@@ -787,7 +811,7 @@ QStringList MatildaDeviceTree::realPageNameDevEmul3()
 
 //---------------------------------------------------------------------
 
-QStringList MatildaDeviceTree::realPageNameDevSvaha()
+QStringList MatildaDeviceTree::realPageNameDevSvaha(const int &protocolVersion)
 {
     QStringList l ;
     l.append( QString("About object")            );
@@ -821,6 +845,10 @@ QStringList MatildaDeviceTree::realPageNameDevSvaha()
 
     //svaha-sync
     l.append(lOnlySvahaSyncRealNames());
+    if(protocolVersion >= MATILDA_PROTOCOL_VERSION_V11){
+        l.append(m2mHttpNames());
+        l.append(QString("SavedM2MprofilesSett"));
+    }
     return l;
 }
 
@@ -841,6 +869,8 @@ QStringList MatildaDeviceTree::lOnlySvahaSyncRealNames()
     l.append(QString("SNTP Events"));
     l.append(QString("SNTP Error Log"));
     l.append(QString("SNTP Warning Log"));
+
+
 
     return l;
 }
@@ -863,6 +893,8 @@ QStringList MatildaDeviceTree::lOnlySvahaSyncLocalNames()
     l.append(tr("SNTP Error Log"));
     l.append(tr("SNTP Warning Log"));
 
+
+
     return l;
 }
 
@@ -883,6 +915,10 @@ QStringList MatildaDeviceTree::lOnlySvahaSyncPath2icon()
     l.append( ":/katynko/svg2/view-readermode-gr.svg" );
     l.append( ":/katynko/svg2/view-readermode-redsvg.svg" );
     l.append( ":/katynko/svg2/view-readermode-yel.svg" );
+
+
+
+
     return l;
 }
 
@@ -1219,6 +1255,11 @@ QStringList MatildaDeviceTree::lDevPollProtocolV11RealNames()
     l.append(QString("ModbusTcpServiceHistory"));
 
 
+    //m2m service
+    l.append(QString("M2MHttpApiks"));
+    l.append(QString("M2MHttpGeneral"));
+    l.append(QString("M2MHttpEvents"));
+    l.append(QString("M2MHttpServiceHistory"));
 
     return l;
 }
@@ -1249,6 +1290,13 @@ QStringList MatildaDeviceTree::lDevPollProtocolV11LocalNames()
     l.append(tr("Events"));
     l.append(tr("502 Service State"));
 
+    //m2m service
+    l.append(tr("Http API keys"));
+    l.append(tr("Http General"));
+    l.append(tr("Http Events"));
+    l.append(tr("Http Service History"));
+
+
     return l;
 
 }
@@ -1276,6 +1324,14 @@ QStringList MatildaDeviceTree::lDevPollProtocolV11Path2icon()
     l.append( ":/katynko/svg2/view-readermode-gr2.svg" );
 
     l.append( ":/katynko/svg/edit-table-insert-row-below.svg");
+
+
+    //m2m service
+    l.append( ":/katynko/svg5/jo01-http.svg" );
+    l.append( ":/katynko/svg5/run-build-http.svg" );
+    l.append( ":/katynko/svg5/view-readermode-http.svg" );
+    l.append( ":/katynko/svg5/lc_dbtableedit-http.svg" );
+
 
     return l;
 }

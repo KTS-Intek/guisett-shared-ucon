@@ -55,10 +55,15 @@ public:
 
     static QStringList modbusNames();
 
+    static QStringList m2mHttpNames();
+
 
     static QStringList prepaidNames();
 
     static QStringList smartLightNames();
+
+
+    static QStringList m2mNamesAll();
 
     static QStringList m2mNames();
 
@@ -80,7 +85,7 @@ public:
     static QStringList realPageNameDevEmul2(const int &protocolVersion);
     static QStringList realPageNameDevEmul3();
 
-    static QStringList realPageNameDevSvaha();
+    static QStringList realPageNameDevSvaha(const int &protocolVersion);
 
 
     static QStringList lOnlySvahaSyncRealNames();
