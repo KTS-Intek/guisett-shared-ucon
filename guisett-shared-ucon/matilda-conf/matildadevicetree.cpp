@@ -847,7 +847,12 @@ QStringList MatildaDeviceTree::realPageNameDevSvaha(const int &protocolVersion)
     l.append(lOnlySvahaSyncRealNames());
     if(protocolVersion >= MATILDA_PROTOCOL_VERSION_V11){
         l.append(m2mHttpNames());
-        l.append(QString("SavedM2MprofilesSett"));
+        l.append(QString("SavedM2MprofilesSett")); //v7
+
+        l.append(QString("GSMNotifications")); //v8
+        l.append(QString("GSMCommandsLog"));
+        l.append(QString("UCServiceState"));
+
     }
     return l;
 }
