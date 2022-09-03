@@ -476,6 +476,8 @@ QStringList MatildaDeviceTree::m2mHttpNames()
     l.append(QString("M2MHttpGeneral"));
     l.append(QString("M2MHttpEvents"));
     l.append(QString("M2MHttpServiceHistory"));
+    l.append(QString("M2MSrvEvents"));
+
     return l;
 }
 
@@ -1265,6 +1267,7 @@ QStringList MatildaDeviceTree::lDevPollProtocolV11RealNames()
     l.append(QString("M2MHttpGeneral"));
     l.append(QString("M2MHttpEvents"));
     l.append(QString("M2MHttpServiceHistory"));
+    l.append(QString("M2MSrvEvents"));
 
     return l;
 }
@@ -1301,6 +1304,7 @@ QStringList MatildaDeviceTree::lDevPollProtocolV11LocalNames()
     l.append(tr("Http Events"));
     l.append(tr("Http Service History"));
 
+    l.append(tr("M2M Events"));
 
     return l;
 
@@ -1337,6 +1341,7 @@ QStringList MatildaDeviceTree::lDevPollProtocolV11Path2icon()
     l.append( ":/katynko/svg5/view-readermode-http.svg" );
     l.append( ":/katynko/svg5/lc_dbtableedit-http.svg" );
 
+    l.append( ":/katynko/svg5/view-readermode-http.svg" );
 
     return l;
 }

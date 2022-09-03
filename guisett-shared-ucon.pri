@@ -1,5 +1,5 @@
-INCLUDEPATH  += $$PWD\
-                $$PWD/../../defines/defines
+INCLUDEPATH  += $$PWD \
+                $$PWD/../../defines/defines \
                 $$PWD/../../defines/define-types
 
 HEADERS += \
