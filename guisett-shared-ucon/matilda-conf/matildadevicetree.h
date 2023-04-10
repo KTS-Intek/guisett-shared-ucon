@@ -130,6 +130,11 @@ public:
     static QStringList lDevPollProtocolV11LocalNames();
     static QStringList lDevPollProtocolV11Path2icon();
 
+    static QStringList lDevPollProtocolV12RealNames();
+    static QStringList lDevPollProtocolV12LocalNames();
+    static QStringList lDevPollProtocolV12Path2icon();
+
+
     static QStringList realPageName();//en_GB
 
     static QStringList localPageName();//local lang

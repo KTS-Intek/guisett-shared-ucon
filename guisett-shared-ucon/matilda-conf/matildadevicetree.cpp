@@ -33,7 +33,7 @@ QStringList MatildaDeviceTree::simplePagesList()
     l.append( QString("Schedule") );
     l.append( QString("Meters") );
     l.append( QString("Database") );
-//    l.append( QString("Meter logs") );
+    //    l.append( QString("Meter logs") );
     return l;
 }
 
@@ -129,6 +129,8 @@ QStringList MatildaDeviceTree::listPath2icon()
     l.append(lDevPollProtocolV9Path2icon());
 
     l.append(lDevPollProtocolV11Path2icon());
+
+    l.append(lDevPollProtocolV12Path2icon());
 
     for(int i = 0, iMax = l.size(); i < iMax; i++){
         if(l.at(i).left(2) != ":/")
@@ -230,7 +232,7 @@ MatildaDeviceTree::MatildaDevTreeView MatildaDeviceTree::pageName4devTree()
     addChapter(QString("Prepaid"), prepaidNames(), lKeys, h, hashRealName2ico, ":/katynko/svg4/sc_formattedfield.svg");
 
 
-//    addChapter(QString("General for meters"), generalMetersSettNames(), lKeys, h, hashRealName2ico, ":/katynko/svg4/electric-water.svg");
+    //    addChapter(QString("General for meters"), generalMetersSettNames(), lKeys, h, hashRealName2ico, ":/katynko/svg4/electric-water.svg");
     addChapter(QString("Electricity meter"), electricNames(), lKeys, h, hashRealName2ico, ":/katynko/svg4/sc_symbolshapes.lightning.svg");
     addChapter(QString("Water meters"), waterNames(), lKeys, h, hashRealName2ico, ":/katynko/svg4/lc_fillcolor.svg");
 
@@ -255,7 +257,7 @@ MatildaDeviceTree::MatildaDevTreeView MatildaDeviceTree::pageName4devTree()
     addChapter(QString("Modbus"), modbusNames(), lKeys, h, hashRealName2ico, ":/katynko/svg5/modbus-l.svg");
 
 
-//    h.insert("\r\nlKeys\r\n", lKeys);
+    //    h.insert("\r\nlKeys\r\n", lKeys);
     return MatildaDevTreeView(h, hashRealName2ico, lKeys);
 }
 
@@ -276,7 +278,7 @@ QStringList MatildaDeviceTree::infoNames()
 
 
 
-/// generalMetersSettNames
+    /// generalMetersSettNames
     l.append( QString("Statistic of exchange")   );
     l.append( QString("Meter plugin") );
     l.append( QString("Poll events") );
@@ -305,6 +307,10 @@ QStringList MatildaDeviceTree::infoNames()
     //protocol v9
     l.append(QString("DatabaseLogs"));
 
+
+    //protocol v12
+    l.append(QString("DHAppEvents"));
+
     return l;
 
 }
@@ -327,8 +333,8 @@ QStringList MatildaDeviceTree::pollDataNames()
 {
     QStringList l;
     l.append( QString("Database") );
-//    l.append( QString("Meter logs") );
-//    l.append( QString("Hash summ" ) );//do not show it
+    //    l.append( QString("Meter logs") );
+    //    l.append( QString("Hash summ" ) );//do not show it
     return l;
 }
 
@@ -389,6 +395,10 @@ QStringList MatildaDeviceTree::generalSettNames()
 
     //protocol v9
     l.append(QString("DatabaseLimits"));
+
+    //protocol v12
+    l.append(QString("EventsManager"));
+
     return l;
 
 
@@ -404,10 +414,18 @@ QStringList MatildaDeviceTree::electricNames()
     l.append( QString("Schedule") );
     //protocol v7
     l.append(QString("ElMeterpollchannels"));
-//protocol v8
+    //protocol v8
     l.append(QString("RealViewAdvanced"));
     //protocol v9
     l.append(QString("EnrgMonitors"));
+
+    //protocol v12
+    //emeter
+    l.append(QString("EIndividualSchedule"));//individual schedules
+    l.append(QString("EMeterSchedules")); //NI 2 individual schedule name
+
+
+
     return l;
 }
 
@@ -420,6 +438,13 @@ QStringList MatildaDeviceTree::waterNames()
     l.append(QString("WaterMeters"));//Water meters
     l.append(QString("Last active profile"));
     l.append(QString("WaterSchedule"));//Water schedule
+
+    //protocol v12
+    //wmeter
+    l.append(QString("WIndividualSchedule"));//individual schedules
+    l.append(QString("WMeterSchedules")); //NI 2 individual schedule name
+
+
     return l;
 }
 
@@ -432,6 +457,13 @@ QStringList MatildaDeviceTree::gasNames()
     l.append(QString("GasMeters"));//Gas meters
     l.append(QString("Gas Last active profile"));
     l.append(QString("GasSchedule"));//Gas schedule
+
+    //protocol v12
+
+
+    //gmeter
+    l.append(QString("GIndividualSchedule"));//individual schedules
+    l.append(QString("GMeterSchedules")); //NI 2 individual schedule name
     return l;
 }
 
@@ -442,10 +474,14 @@ QStringList MatildaDeviceTree::pulseNames()
     QStringList l;
 
     l.append(QString("PulseMeters"));//Pulse meters
-//    l.append(QString("Pulse Last active profile"));
+    //    l.append(QString("Pulse Last active profile"));
     l.append(QString("PulseSchedule"));//Pulse schedule
     l.append(QString("RealViewAdvancedPMeter"));
 
+    //protocol v12
+    //pmeter
+    l.append(QString("PIndividualSchedule"));//individual schedules
+    l.append(QString("PMeterSchedules")); //NI 2 individual schedule name
     return l;
 }
 
@@ -507,10 +543,10 @@ QStringList MatildaDeviceTree::smartLightNames()
     l.append( QString("General events") );
     l.append( QString("Error events") );
     l.append( QString("Warning events") );
-///v4
+    ///v4
     l.append( QString("Temporary schedule") );
 
-///protocol v6
+    ///protocol v6
     l.append(QString("FireflyTaskTable"));
     l.append(QString("FireflyRescueSchedule"));
     l.append(QString("FireflyNDT"));
@@ -551,7 +587,7 @@ QStringList MatildaDeviceTree::appNames()
 {
     QStringList l;
     l.append( QString("Packet manager") );
-       l.append( QString("Backup") );
+    l.append( QString("Backup") );
 
     return l;
 }
@@ -587,6 +623,9 @@ QStringList MatildaDeviceTree::realPageNameDevPoll(const int &protocolVersion)
     if(protocolVersion < MATILDA_PROTOCOL_VERSION_V11)//щоб видалити не підтримувані сторінки
         ls.append(lDevPollProtocolV11RealNames());
 
+    if(protocolVersion < MATILDA_PROTOCOL_VERSION_V12)//щоб видалити не підтримувані сторінки
+        ls.append(lDevPollProtocolV12RealNames());
+
     QStringList l = realPageName();//беру усі, а потім звідти видаляю ті які не підтримуються
     while(!ls.isEmpty())
         l.removeOne(ls.takeFirst());
@@ -620,8 +659,8 @@ QStringList MatildaDeviceTree::realPageNameDevStor()
     l.append( QString("Backup") );
 
     l.append( QString("Database") );
-//    l.append( QString("Meter logs") );
-//    l.append( QString("Hash summ" ) );
+    //    l.append( QString("Meter logs") );
+    //    l.append( QString("Hash summ" ) );
 
     //protocol v2
     l.append( QString("IP Route"));//v2
@@ -641,14 +680,14 @@ QStringList MatildaDeviceTree::realPageNameDevPoll4staff()
 {
     QStringList l ;
     l.append( QString("About object")            );
-//    l.append( QString("Date and time")           );
-//    l.append( QString("State")                   );
+    //    l.append( QString("Date and time")           );
+    //    l.append( QString("State")                   );
 
     l.append( QString("Statistic of exchange")   );
     l.append( QString("Poll tasks"));
 
 
-//    l.append( QString("Application events") );
+    //    l.append( QString("Application events") );
     l.append( QString("Database") );
 
     l.append( QString("Meters") );
@@ -659,7 +698,7 @@ QStringList MatildaDeviceTree::realPageNameDevPoll4staff()
     l.append(QString("WaterSchedule"));//Water schedule
 
     l.append( QString("Database") );
-//    l.append( QString("Meter logs") );
+    //    l.append( QString("Meter logs") );
 
 
     return l;
@@ -701,7 +740,7 @@ QStringList MatildaDeviceTree::realPageNameDevGate()
     l.append( QString("Backup") );
 
     l.append( QString("Forwarding table"));
-//    l.append( QString("Hash summ" ) );
+    //    l.append( QString("Hash summ" ) );
 
     //protocol v2
     l.append( QString("IP Route"));//v2
@@ -748,7 +787,7 @@ QStringList MatildaDeviceTree::realPageNameDevEmul2(const int &protocolVersion)
     l.append( QString("Poll events") );
 
     l.append( QString("TCP settings") );
-//    l.append( QString("ZigBee") );
+    //    l.append( QString("ZigBee") );
 
     l.append( QString("Serial log stream") );
     l.append( QString("Serial log") );
@@ -756,7 +795,7 @@ QStringList MatildaDeviceTree::realPageNameDevEmul2(const int &protocolVersion)
     l.append( QString("Poll warning events") );
 
 
-//    l.append( QString("Direct access service") );
+    //    l.append( QString("Direct access service") );
     l.append( QString("Direct access client") );
     l.append( QString("M2M client") );
 
@@ -769,8 +808,8 @@ QStringList MatildaDeviceTree::realPageNameDevEmul2(const int &protocolVersion)
 
     l.append( QString("Meters") );
     l.append( QString("Database") );
-//    l.append( QString("Meter logs") );
-//    l.append( QString("Hash summ" ) );
+    //    l.append( QString("Meter logs") );
+    //    l.append( QString("Hash summ" ) );
 
     if(protocolVersion >= MATILDA_PROTOCOL_VERSION_V5){
         l.append(lDevPollProtocolV5RealNames());
@@ -838,7 +877,7 @@ QStringList MatildaDeviceTree::realPageNameDevSvaha(const int &protocolVersion)
 
     l.append( QString("Backup") );
 
-//size 33
+    //size 33
 
     //protocol v2
     l.append( QString("IP Route"));//v2
@@ -1241,13 +1280,13 @@ QStringList MatildaDeviceTree::lDevPollProtocolV11RealNames()
     QStringList l;
 
 
-//    l.append(QString("GasMeters"));//Gas meters
-//    l.append(QString("Gas Last active profile"));
-//    l.append(QString("GasSchedule"));//Gas schedule
+    //    l.append(QString("GasMeters"));//Gas meters
+    //    l.append(QString("Gas Last active profile"));
+    //    l.append(QString("GasSchedule"));//Gas schedule
 
 
     l.append(QString("PulseMeters"));//Pulse meters
-//    l.append(QString("Pulse Last active profile"));
+    //    l.append(QString("Pulse Last active profile"));
     l.append(QString("PulseSchedule"));//Gas schedule
 
     l.append(QString("RealViewAdvancedPMeter"));
@@ -1278,13 +1317,13 @@ QStringList MatildaDeviceTree::lDevPollProtocolV11LocalNames()
 {
     QStringList l;
 
-//    l.append(tr("Gas Meters"));//Gas meters
-//    l.append(tr("Gas Last active profile"));
-//    l.append(tr("GasSchedule"));//Gas schedule
+    //    l.append(tr("Gas Meters"));//Gas meters
+    //    l.append(tr("Gas Last active profile"));
+    //    l.append(tr("GasSchedule"));//Gas schedule
 
 
     l.append(tr("Pulse meters"));//Pulse meters
-//    l.append(tr("Pulse Last active profile"));
+    //    l.append(tr("Pulse Last active profile"));
     l.append(tr("Pulse Schedule"));//Gas schedule
     l.append(tr("Pulse Real View Advanced"));//Gas schedule
 
@@ -1315,9 +1354,9 @@ QStringList MatildaDeviceTree::lDevPollProtocolV11LocalNames()
 QStringList MatildaDeviceTree::lDevPollProtocolV11Path2icon()
 {
     QStringList l;
-//    l.append( ":/katynko/svg4/actionview026.svg"); Gas meters
-//    l.append( ":/katynko/svg4/actionview026.svg");
-//    l.append( ":/katynko/svg4/actionview026.svg");
+    //    l.append( ":/katynko/svg4/actionview026.svg"); Gas meters
+    //    l.append( ":/katynko/svg4/actionview026.svg");
+    //    l.append( ":/katynko/svg4/actionview026.svg");
 
     l.append( ":/katynko/svg5/gtk-index.svg");
     l.append( ":/katynko/svg2/dashboard-show.svg");
@@ -1344,6 +1383,93 @@ QStringList MatildaDeviceTree::lDevPollProtocolV11Path2icon()
     l.append( ":/katynko/svg5/view-readermode-http.svg" );
 
     return l;
+}
+
+//---------------------------------------------------------------------
+
+QStringList MatildaDeviceTree::lDevPollProtocolV12RealNames()
+{
+    QStringList l;
+
+    //emeter
+    l.append(QString("EIndividualSchedule"));//individual schedules
+    l.append(QString("EMeterSchedules")); //NI 2 individual schedule name
+
+    //wmeter
+    l.append(QString("WIndividualSchedule"));//individual schedules
+    l.append(QString("WMeterSchedules")); //NI 2 individual schedule name
+
+    //pmeter
+    l.append(QString("PIndividualSchedule"));//individual schedules
+    l.append(QString("PMeterSchedules")); //NI 2 individual schedule name
+
+    l.append(QString("EventsManager"));
+
+
+    //gmeter
+    l.append(QString("GIndividualSchedule"));//individual schedules
+    l.append(QString("GMeterSchedules")); //NI 2 individual schedule name
+
+    l.append(QString("DHAppEvents"));
+
+    return l;
+}
+
+//---------------------------------------------------------------------
+
+QStringList MatildaDeviceTree::lDevPollProtocolV12LocalNames()
+{
+    QStringList l;
+
+    //emeter
+    l.append(tr("Individual Schedules"));//individual schedules
+    l.append(tr("Meter and Schedules")); //NI 2 individual schedule name
+
+    //wmeter
+    l.append(tr("Individual Schedules"));//individual schedules
+    l.append(tr("Meter and Schedules")); //NI 2 individual schedule name
+
+    //pmeter
+    l.append(tr("Individual Schedules"));//individual schedules
+    l.append(tr("Meter and Schedules")); //NI 2 individual schedule name
+
+    l.append(tr("Events Manager"));
+
+
+    //gmeter
+    l.append(tr("Individual Schedules"));//individual schedules
+    l.append(tr("Meter and Schedules")); //NI 2 individual schedule name
+
+    l.append(tr("Data holder log")); //NI 2 individual schedule name
+
+    return l;
+}
+
+//---------------------------------------------------------------------
+
+QStringList MatildaDeviceTree::lDevPollProtocolV12Path2icon()
+{
+    QStringList l;
+    //emeter
+    l.append( ":/katynko/svg5/gtk-index-mirr.svg");//individual schedules
+    l.append( ":/katynko/svg5/dashboard-show-mirr.svg");//NI 2 individual schedule name
+    //wmeter
+    l.append( ":/katynko/svg5/gtk-index-mirr.svg");//individual schedules
+    l.append( ":/katynko/svg5/dashboard-show-mirr.svg");//NI 2 individual schedule name
+    //pmeter
+    l.append( ":/katynko/svg5/gtk-index-mirr.svg");//individual schedules
+    l.append( ":/katynko/svg5/dashboard-show-mirr.svg");//NI 2 individual schedule name
+
+    l.append( ":/katynko/svg5/lc_tabdialog.svg");
+
+    //gmeter
+    l.append( ":/katynko/svg5/gtk-index-mirr.svg");//individual schedules
+    l.append( ":/katynko/svg5/dashboard-show-mirr.svg");//NI 2 individual schedule name
+
+    l.append( ":/katynko/svg2/view-readermode-gr2.svg" );//data holder events
+
+    return l;
+
 }
 
 //---------------------------------------------------------------------
@@ -1394,7 +1520,7 @@ QStringList MatildaDeviceTree::realPageName()
     l.append( QString("Database") );
     l.append( QString("Meter logs") );//do not delete here!
     l.append( QString("Hash summ" ) );//do not delete here!
-//size 34
+    //size 34
 
     //protocol v2
     l.append( QString("IP Route"));//v2
@@ -1426,6 +1552,8 @@ QStringList MatildaDeviceTree::realPageName()
 
     l.append(lDevPollProtocolV9RealNames());//starts at 84
     l.append(lDevPollProtocolV11RealNames());//starts at 84
+    l.append(lDevPollProtocolV12RealNames());//starts at 102
+
 
     return l;
 }
@@ -1506,6 +1634,7 @@ QStringList MatildaDeviceTree::localPageName()
     l.append(lDevPollProtocolV8LocalNames());
     l.append(lDevPollProtocolV9LocalNames());
     l.append(lDevPollProtocolV11LocalNames());
+    l.append(lDevPollProtocolV12LocalNames());
 
 
     return l;
@@ -1531,7 +1660,7 @@ QStringList MatildaDeviceTree::realChapterName()
     l.append( QString("M2M Service"));
     l.append( QString("Application"));
     //chapters
-//v11
+    //v11
     l.append( QString("Pulse meters"));
 
     return l;
@@ -1600,13 +1729,13 @@ QList<int> MatildaDeviceTree::getPageCanWrite()
     listInt.append( 0 );
     listInt.append( 0 );
     listInt.append( 0 );
-    listInt.append( 0 );   
+    listInt.append( 0 );
     listInt.append( COMMAND_WRITE_GPRS_SETT );
     listInt.append( COMMAND_WRITE_TCP_SETT   );
     listInt.append( COMMAND_WRITE_ZIGBEE_SETT );
     listInt.append( COMMAND_WRITE_UPGRADE );
     listInt.append( 0 );
-    listInt.append( 0 );    
+    listInt.append( 0 );
     listInt.append( 0 );//exchange
     listInt.append( 0 );
     listInt.append( 0 );
@@ -1783,14 +1912,14 @@ QList<int> MatildaDeviceTree::getPageCanReadDevPollProtocolV4()
 
 QList<int> MatildaDeviceTree::getPageCanWriteDevPollProtocolV5()
 {
-     return QList<int>() << 0 << COMMAND_WRITE_WMETER_LIST_FRAMED << COMMAND_WRITE_WMETER_LAST_PROFILES << COMMAND_SET_STAFFUSERS << COMMAND_WRITE_WMETER_POLL_SCHEDULE
-                         << COMMAND_WRITE_ZBYRTASK_TABLE_SETT;
+    return QList<int>() << 0 << COMMAND_WRITE_WMETER_LIST_FRAMED << COMMAND_WRITE_WMETER_LAST_PROFILES << COMMAND_SET_STAFFUSERS << COMMAND_WRITE_WMETER_POLL_SCHEDULE
+                        << COMMAND_WRITE_ZBYRTASK_TABLE_SETT;
 
-//     l.append(tr("Poll tasks"));//Poll tasks
-//     l.append(tr("Water meters"));
-//     l.append(tr("Last active profile"));
-//     l.append(tr("Staff accounts"));
-//     l.append(tr("Water schedule"));
+    //     l.append(tr("Poll tasks"));//Poll tasks
+    //     l.append(tr("Water meters"));
+    //     l.append(tr("Last active profile"));
+    //     l.append(tr("Staff accounts"));
+    //     l.append(tr("Water schedule"));
 }
 
 //---------------------------------------------------------------------
@@ -1807,11 +1936,11 @@ QList<int> MatildaDeviceTree::getPageCanReadDevPollProtocolV5()
 
 QList<int> MatildaDeviceTree::getPageCanWriteDevPollProtocolV6()
 {
-//    l.append(tr("Database IP Rules"));
+    //    l.append(tr("Database IP Rules"));
 
-//    l.append(tr("Lamp's tasks"));
-//    l.append(tr("Rescue schedules"));//Water meters
-//    l.append(tr("Lamps's searcher"));
+    //    l.append(tr("Lamp's tasks"));
+    //    l.append(tr("Rescue schedules"));//Water meters
+    //    l.append(tr("Lamps's searcher"));
     return QList<int>() << COMMAND_WRITE_CALC_SUMM_4THISIPS << COMMAND_WRITE_FIREFLY_TABLE_SETT << COMMAND_WRITE_GROUP_RESCUE_SCHEDULE << 0 << 0 << COMMAND_WRITE_PROXYSETTINGS;
 
 
