@@ -372,6 +372,11 @@ QStringList MatildaDeviceTree::networkSettNames()
     l.append(QString("TCPMediumServer"));
     l.append(QString("GSMNotifications"));
 
+
+    //protocol v12
+    l.append(QString("WiFiParams"));
+    l.append(QString("IPBlockers"));
+
     return l;
 }
 
@@ -1412,6 +1417,9 @@ QStringList MatildaDeviceTree::lDevPollProtocolV12RealNames()
 
     l.append(QString("DHAppEvents"));
 
+    l.append(QString("WiFiParams"));
+    l.append(QString("IPBlockers"));
+
     return l;
 }
 
@@ -1442,6 +1450,9 @@ QStringList MatildaDeviceTree::lDevPollProtocolV12LocalNames()
 
     l.append(tr("Data holder log")); //NI 2 individual schedule name
 
+    l.append(tr("Wi-Fi settings"));
+    l.append(tr("IP Blockers"));
+
     return l;
 }
 
@@ -1467,6 +1478,11 @@ QStringList MatildaDeviceTree::lDevPollProtocolV12Path2icon()
     l.append( ":/katynko/svg5/dashboard-show-mirr.svg");//NI 2 individual schedule name
 
     l.append( ":/katynko/svg2/view-readermode-gr2.svg" );//data holder events
+
+
+    l.append( ":/katynko/svg2/text-x-opml+xml.svg");//WiFiParams
+    l.append( ":/katynko/svg5/jo01-http.svg");//   IPBlockers
+
 
     return l;
 
