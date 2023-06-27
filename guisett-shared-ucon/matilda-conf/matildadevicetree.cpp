@@ -403,6 +403,7 @@ QStringList MatildaDeviceTree::generalSettNames()
 
     //protocol v12
     l.append(QString("EventsManager"));
+    l.append(QString("MessengerProfiles"));
 
     return l;
 
@@ -1419,6 +1420,7 @@ QStringList MatildaDeviceTree::lDevPollProtocolV12RealNames()
 
     l.append(QString("WiFiParams"));
     l.append(QString("IPBlockers"));
+    l.append(QString("MessengerProfiles"));
 
     return l;
 }
@@ -1452,6 +1454,7 @@ QStringList MatildaDeviceTree::lDevPollProtocolV12LocalNames()
 
     l.append(tr("Wi-Fi settings"));
     l.append(tr("IP Blockers"));
+    l.append(tr("Event Messenger Profiles"));
 
     return l;
 }
@@ -1483,6 +1486,7 @@ QStringList MatildaDeviceTree::lDevPollProtocolV12Path2icon()
     l.append( ":/katynko/svg2/text-x-opml+xml.svg");//WiFiParams
     l.append( ":/katynko/svg5/jo01-http.svg");//   IPBlockers
 
+    l.append( ":/katynko/svg5/jo01-http.svg");//   MessengerProfiles
 
     return l;
 
