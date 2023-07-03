@@ -567,6 +567,7 @@ QStringList MatildaDeviceTree::m2mNamesAll()
 {
     auto l = m2mNames();
     l.append(m2mHttpNames());
+
     return l;
 }
 //---------------------------------------------------------------------
@@ -899,6 +900,11 @@ QStringList MatildaDeviceTree::realPageNameDevSvaha(const int &protocolVersion)
         l.append(QString("GSMNotifications")); //v8
         l.append(QString("GSMCommandsLog"));
         l.append(QString("UCServiceState"));
+
+       if(protocolVersion >= MATILDA_PROTOCOL_VERSION_V12){
+           l.append(QString("IPBlockers"));
+
+       }
 
     }
     return l;
