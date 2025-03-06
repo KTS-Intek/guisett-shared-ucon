@@ -115,7 +115,7 @@ QStringList MatildaDeviceTree::listPath2icon()
     l.append( ":/katynko/svg2/view-readermode-red2.svg" );
     l.append( ":/katynko/svg2/view-readermode-yel2.svg" );
 
-    l.append(lOnlySvahaSyncPath2icon());
+    l.append(lOnlyM2MSrvcSyncPath2icon());
 
     l.append(lDevPollProtocolV3Path2icon());
     l.append(lDevPollProtocolV4Path2icon());
@@ -178,8 +178,11 @@ QStringList MatildaDeviceTree::realPageNameByDev(const int &devType, const int &
     switch(devType){
     case DEV_POLL            : l = realPageNameDevPoll(protocolVersion) ; break;
     case DEV_STOR            : l = realPageNameDevStor() ; break;
-    case DEV_GATE            : l = realPageNameDevGate() ; break;
-    case DEV_SVAHA           : l = realPageNameDevSvaha(protocolVersion); break;
+//    case DEV_GATE            : l = realPageNameDevGate() ; break;
+    case DEV_M2M_SRVS           : l = realPageNameDevM2MSrvc(protocolVersion); break;
+    case DEV_M2M_STAFF_SRVS   : l = realPageNameDevM2MSrvcStaff(protocolVersion) ; break;
+
+    case DEV_GATE_V2            : l = realPageNameDevGate() ; break;
 
     case DEV_POLL_4_STAFF   : l = realPageNameDevPoll4staff(); break;
 
@@ -603,7 +606,7 @@ QStringList MatildaDeviceTree::appNames()
 
 QStringList MatildaDeviceTree::realPageNameDevPoll(const int &protocolVersion)
 {
-    QStringList ls = lOnlySvahaSyncRealNames();
+    QStringList ls = lOnlyM2MSrvcSyncRealNames();
     ls.append(m2mHttpNames());
 
     if(protocolVersion < MATILDA_PROTOCOL_VERSION_V3)
@@ -859,7 +862,7 @@ QStringList MatildaDeviceTree::realPageNameDevEmul3()
 
 //---------------------------------------------------------------------
 
-QStringList MatildaDeviceTree::realPageNameDevSvaha(const int &protocolVersion)
+QStringList MatildaDeviceTree::realPageNameDevM2MSrvc(const int &protocolVersion)
 {
     QStringList l ;
     l.append( QString("About object")            );
@@ -892,7 +895,7 @@ QStringList MatildaDeviceTree::realPageNameDevSvaha(const int &protocolVersion)
 
 
     //svaha-sync
-    l.append(lOnlySvahaSyncRealNames());
+    l.append(lOnlyM2MSrvcSyncRealNames());
     if(protocolVersion >= MATILDA_PROTOCOL_VERSION_V11){
         l.append(m2mHttpNames());
         l.append(QString("SavedM2MprofilesSett")); //v7
@@ -904,6 +907,24 @@ QStringList MatildaDeviceTree::realPageNameDevSvaha(const int &protocolVersion)
        if(protocolVersion >= MATILDA_PROTOCOL_VERSION_V12){
            l.append(QString("IPBlockers"));
 
+           l.append(QString("Staff accounts"));//protocol v5
+           //protocol v4
+           l.append(QString("OpenVPN profiles"));
+           l.append(QString("OpenVPN state"));
+
+           //protocol v7
+           l.append(QString("IfaceSett4channels"));
+
+           //protocol v8
+           l.append(QString("TCPMediumServer"));
+           l.append(QString("TCPServerMediumLogs"));
+
+
+           l.append(QString("DaAdditionalChannelsLog"));
+
+           l.append( QString("Quick Direct Access") ); //main channel will not work
+
+
        }
 
     }
@@ -912,7 +933,27 @@ QStringList MatildaDeviceTree::realPageNameDevSvaha(const int &protocolVersion)
 
 //---------------------------------------------------------------------
 
-QStringList MatildaDeviceTree::lOnlySvahaSyncRealNames()
+QStringList MatildaDeviceTree::realPageNameDevM2MSrvcStaff(const int &protocolVersion)
+{
+    QStringList l ;
+    l.append( QString("About object")            );
+
+       if(protocolVersion >= MATILDA_PROTOCOL_VERSION_V12){
+
+
+
+           l.append( QString("Quick Direct Access") ); //main channel will not work
+
+
+       }
+
+
+    return l;
+}
+
+//---------------------------------------------------------------------
+
+QStringList MatildaDeviceTree::lOnlyM2MSrvcSyncRealNames()
 {
     QStringList l;
     //svaha-service
@@ -935,7 +976,7 @@ QStringList MatildaDeviceTree::lOnlySvahaSyncRealNames()
 
 //---------------------------------------------------------------------
 
-QStringList MatildaDeviceTree::lOnlySvahaSyncLocalNames()
+QStringList MatildaDeviceTree::lOnlyM2MSrvcSyncLocalNames()
 {
     QStringList l;
     //svaha-service
@@ -958,7 +999,7 @@ QStringList MatildaDeviceTree::lOnlySvahaSyncLocalNames()
 
 //---------------------------------------------------------------------
 
-QStringList MatildaDeviceTree::lOnlySvahaSyncPath2icon()
+QStringList MatildaDeviceTree::lOnlyM2MSrvcSyncPath2icon()
 {
     QStringList l;
     //svaha-service
@@ -1565,7 +1606,7 @@ QStringList MatildaDeviceTree::realPageName()
     l.append( QString("Warning events") );
 
     //svaha-sync
-    l.append(lOnlySvahaSyncRealNames());
+    l.append(lOnlyM2MSrvcSyncRealNames());
 
     l.append(lDevPollProtocolV3RealNames());
     l.append(lDevPollProtocolV4RealNames());
@@ -1650,7 +1691,7 @@ QStringList MatildaDeviceTree::localPageName()
     l.append( tr("Errors") );
     l.append( tr("Warnings") );
 
-    l.append(lOnlySvahaSyncLocalNames());
+    l.append(lOnlyM2MSrvcSyncLocalNames());
 
     l.append(lDevPollProtocolV3LocalNames());
     l.append(lDevPollProtocolV4LocalNames());
@@ -1799,7 +1840,7 @@ QList<int> MatildaDeviceTree::getPageCanWrite()
     listInt.append( 0 );
     listInt.append( 0 );
 
-    listInt.append(getPageCanWriteSvahaOnly());
+    listInt.append(getPageCanWriteM2MSrvcOnly());
     listInt.append(getPageCanWriteDevPollProtocolV3());
     listInt.append(getPageCanWriteDevPollProtocolV4());
     listInt.append(getPageCanWriteDevPollProtocolV5());
@@ -1873,7 +1914,7 @@ QList<int> MatildaDeviceTree::getPageCanRead()
     listInt.append( COMMAND_READ_FIREFLY_LOG_ERROR);
     listInt.append( COMMAND_READ_FIREFLY_LOG_WARN);
 
-    listInt.append(getPageCanReadSvahaOnly());
+    listInt.append(getPageCanReadM2MSrvcOnly());
     listInt.append(getPageCanReadDevPollProtocolV3());
     listInt.append(getPageCanReadDevPollProtocolV4());
     listInt.append(getPageCanReadDevPollProtocolV5());
@@ -1887,7 +1928,7 @@ QList<int> MatildaDeviceTree::getPageCanRead()
 
 //---------------------------------------------------------------------
 
-QList<int> MatildaDeviceTree::getPageCanWriteSvahaOnly()
+QList<int> MatildaDeviceTree::getPageCanWriteM2MSrvcOnly()
 {
     QList<int> l;
     //svaha-sync
@@ -1900,7 +1941,7 @@ QList<int> MatildaDeviceTree::getPageCanWriteSvahaOnly()
 
 //---------------------------------------------------------------------
 
-QList<int> MatildaDeviceTree::getPageCanReadSvahaOnly()
+QList<int> MatildaDeviceTree::getPageCanReadM2MSrvcOnly()
 {
     QList<int> l;
     //svaha-service

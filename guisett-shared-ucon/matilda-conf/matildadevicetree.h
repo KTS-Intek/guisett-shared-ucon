@@ -85,12 +85,13 @@ public:
     static QStringList realPageNameDevEmul2(const int &protocolVersion);
     static QStringList realPageNameDevEmul3();
 
-    static QStringList realPageNameDevSvaha(const int &protocolVersion);
+    static QStringList realPageNameDevM2MSrvc(const int &protocolVersion);
+    static QStringList realPageNameDevM2MSrvcStaff(const int &protocolVersion);
 
 
-    static QStringList lOnlySvahaSyncRealNames();
-    static QStringList lOnlySvahaSyncLocalNames();
-    static QStringList lOnlySvahaSyncPath2icon();
+    static QStringList lOnlyM2MSrvcSyncRealNames();
+    static QStringList lOnlyM2MSrvcSyncLocalNames();
+    static QStringList lOnlyM2MSrvcSyncPath2icon();
 
     static QStringList lDevPollProtocolV3RealNames();
     static QStringList lDevPollProtocolV3LocalNames();
@@ -155,8 +156,8 @@ public:
     static QList<int> getPageCanWrite();
     static QList<int> getPageCanRead();
 
-    static QList<int> getPageCanWriteSvahaOnly();
-    static QList<int> getPageCanReadSvahaOnly();
+    static QList<int> getPageCanWriteM2MSrvcOnly();
+    static QList<int> getPageCanReadM2MSrvcOnly();
 
     static QList<int> getPageCanWriteDevPollProtocolV3();
     static QList<int> getPageCanReadDevPollProtocolV3();
